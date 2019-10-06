@@ -1,44 +1,79 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# binary-beats
 
-## Available Scripts
+project doc: https://docs.google.com/document/d/1pXFMwa_RV8snXHQbCD4V427rB7FA4Ny0S2IkgWzWXtM/edit#heading=h.tq1b2yrt6f1m
 
-In the project directory, you can run:
+## Usage Instructions
 
-### `yarn start`
+To start web app:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- `yarn start`
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Internal Beat API Summary
 
-### `yarn test`
+Here is a summary of how midi-sounds-react represents their sequences
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- uses array of arrays
+- top level array represents a bar (AKA measure)
+- top level array is split by the pre-defined subdivisions
+- so a one bar array for a 16th note subdivided track, would have 16 entries
+- a 2 bar array for a 16th note subdivided track would have 32 entries
+- a 2 bar array for an 8th note subdivided track would have 16 entries, etc.
+- each inner array represents a beat
+- the reason it is an array instead of just a value is so we can specify multiple instruments to play at the same beat
+- each beat is an array with two entries
+- the first entry is where you put the drum sounds you want to play
+- the second entry is where you put the melodic sounds you want to play (we'll always leave this empty)
+- each entry is itself an array
+- confused yet? Check out the examples!
 
-### `yarn build`
+### Examples
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Here is a very simple drum beat (the video is long but just get the gist):
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+[Click me](https://www.youtube.com/watch?v=4SDBJp_B5qQ)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+We can represent this beat like so, notice each second entry is an empty array, because we're only doing drums:
 
-### `yarn eject`
+```js
+const KICK = 5;
+const SNARE = 15;
+const HIHAT = 35;
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+const simpleBeat8 = [
+  [[HIHAT, KICK], []],     // 1
+  [[HIHAT], []],           // and
+  [[HIHAT, SNARE], []],    // 2
+  [[HIHAT], []],           // and
+  [[HIHAT, KICK], []],     // 3
+  [[HIHAT], []],           // and
+  [[HIHAT, SNARE], []],    // 4
+  [[HIHAT], []],           // and
+]
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+And run it like this: `midiSounds.startPlayLoop(simpleBeat8, 120, 1 / 8);`
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+We could also represent this with 16th note subdivisions (without variables):
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```js
+const simpleBeat16 = [
+  [[35, 5], []],        // 1
+  [[], []],             // e
+  [[35], []],           // and
+  [[], []],             // a
+  [[35, 15], []],       // 2
+  [[], []],             // e
+  [[35], []],           // and
+  [[], []],             // a
+  [[35, 5], []],        // 3
+  [[], []],             // e
+  [[35], []],           // and
+  [[], []],             // a
+  [[35, 15], []],       // 4
+  [[], []],             // e
+  [[35], []],           // and
+  [[], []],             // a
+]
+```
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+And run it like this: `midiSounds.startPlayLoop(simpleBeat16, 120, 1 / 16);`
