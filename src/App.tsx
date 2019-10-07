@@ -27,16 +27,15 @@ class App extends Component<any, State> {
     this.state = {
       code:
         `Set tempo to 120 bpm
-      Rhythms:
-        Define HAT1 as {xxxxxxxxxxxxxxxx}
-        Define SNR1 as [--x---x-]
-        Define KCK1 as |x-x-|
-      Create beat A with layers:
-        HAT: HAT1
-        SNR: SNR1
-        KCK: KCK1
-      Play beat A
-      `,
+Rhythms:
+  Define HAT1 as {xxxxxxxxxxxxxxxx}
+  Define SNR1 as [--x---x-]
+  Define KCK1 as |x-x-|
+Create beat A with layers:
+  HAT: HAT1
+  SNR: SNR1
+  KCK: KCK1
+Play beat A`,
       isSidebarOpen: false,
       logs: [],
     };
