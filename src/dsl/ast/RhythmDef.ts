@@ -36,6 +36,7 @@ class RhythmDef extends Node {
   }
 
   // saves rhythm to rhythm name
+  // TODO: test this after rhythm is done
   evaluate(): void {
     SymbolTable.rhythms[this.rhythmName] = this.rhythm.pattern;
   }
@@ -45,7 +46,6 @@ class RhythmDef extends Node {
       throw new Error(`Rhythm with name ${this.rhythmName} has already been defined.`);
     }
     SymbolTable.types[this.rhythmName] = BBType.Rhythm;
-    console.log(SymbolTable.types);
   }
 }
 
