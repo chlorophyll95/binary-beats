@@ -3,12 +3,16 @@ import Editor from 'react-simple-code-editor';
 import * as prism from 'prismjs';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
+import MIDISounds from 'midi-sounds-react';
 
 import Tokenizer from './dsl/libs/Tokenizer';
 import { BBProgram } from './dsl/ast/BBProgram';
+import DrumCodeMap from './dsl/libs/DrumCodeMap';
 
 import './App.css';
+import './syntax.css';
 
+import Quarters from './dsl/ast/Quarters';
 
 interface PropType {
 
@@ -21,6 +25,8 @@ interface State {
 }
 
 class App extends Component<any, State> {
+  private midiSounds: any;
+
   constructor(props: PropType) {
     super(props);
 
@@ -71,8 +77,15 @@ Play beat A`,
     this.pushLog('Tokenizing complete ✅');
     let program = new BBProgram();
 
+    let quarter = new Quarters();
+    quarter.setDrumCode(DrumCodeMap.getDrumCode('KCK'));
+    quarter.parse();
+    quarter.evaluate();
+
     // at the end
     this.pushLog('Beat ready 💅');
+
+    this.midiSounds.startPlayLoop(quarter.evaluate(), 100, 1 / 16);
   }
 
   render() {
@@ -99,17 +112,15 @@ Play beat A`,
         <div className="output">
           {
             this.state.logs.map((log: string) => (
-              <span>{log}</span>
+              <span key={log}>{log}</span>
             ))
           }
-          {/* <span>Reading Input...</span>
-          <span>Tokenizing...</span>
-          <span>Building AST...</span>
-          <span>Type Checking...</span>
-          <span>Evaluating...</span>
-          <span>Done ✅</span>
-          <span>Playing your loop 🔁</span> */}
         </div>
+        <MIDISounds
+          ref={(ref: any) => (this.midiSounds = ref)}
+          appElementName="root"
+          drums={[5, 15, 35]}
+        />
       </div>
     );
   }
