@@ -6,7 +6,7 @@ import { BBType } from "../libs/BBTypes";
 
 class BeatDef extends Node {
   beatName: string;
-  layers: Layer[];
+  layers: Layer[] = [];
   parse(): void {
     let tokenizer = Tokenizer.getTokenizer();
     tokenizer.getAndCheckNext('Create');
@@ -21,6 +21,7 @@ class BeatDef extends Node {
     // assume (for now) that beatdef must be followed by another beatdef or play
     while (!tokenizer.checkToken("Create") && !tokenizer.checkToken("Play")) {
       let layer = new Layer();
+      console.log('found new layer');
       layer.parse();
       this.layers.push(layer);
       // each layer is separated by new line
