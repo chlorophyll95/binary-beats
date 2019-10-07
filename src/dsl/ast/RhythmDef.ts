@@ -32,13 +32,13 @@ class RhythmDef extends Node {
     }
     else throw new Error (`Unexpected token at line: ${tokenizer.line}, column: ${tokenizer.column}`);
 
-    //this.rhythm.parse();
+    this.rhythm.parse();
   }
 
   // saves rhythm to rhythm name
   // TODO: test this after rhythm is done
   evaluate(): void {
-    SymbolTable.rhythms[this.rhythmName] = this.rhythm.pattern;
+    SymbolTable.rhythms[this.rhythmName] = this.rhythm;
   }
 
   nameAndTypeCheck(): void {
