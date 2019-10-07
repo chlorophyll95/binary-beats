@@ -62,7 +62,10 @@ export default class Tokenizer {
         if (this.checkNext() != null) {
             let token = this.tokens[this.currentTokenIdx];
             this.currentTokenIdx += 1;
-            this.column += 1;
+            this.column += token.length;
+            if (token == "NEW_LINE") {
+                this.line += 1;
+            }
             return token;
         }
         return "";
