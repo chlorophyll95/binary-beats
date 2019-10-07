@@ -58,14 +58,14 @@ export default class Tokenizer {
         return token === s;
     }
 
-    public getNext(): string | null {
+    public getNext(): string {
         if (this.checkNext() != null) {
             let token = this.tokens[this.currentTokenIdx];
             this.currentTokenIdx += 1;
             this.column += 1;
             return token;
         }
-        return null;
+        return "";
     }
 
     public getAndCheckNext(token: string): string {
