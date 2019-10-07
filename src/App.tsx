@@ -20,7 +20,7 @@ interface PropType {
 
 interface State {
   code: string;
-  isSidebarOpen: boolean;
+  isPlaying: boolean;
   logs: string[];
 }
 
@@ -42,12 +42,14 @@ Create beat A with layers:
   SNR: SNR1
   KCK: KCK1
 Play beat A`,
-      isSidebarOpen: false,
       logs: [],
+      isPlaying: false,
     };
 
     this.pushLog = this.pushLog.bind(this);
     this.clearLog = this.clearLog.bind(this);
+    this.onCompile = this.onCompile.bind(this);
+    this.onStop = this.onStop.bind(this);
   }
 
   pushLog(log: string) {
@@ -86,6 +88,23 @@ Play beat A`,
     this.pushLog('Beat ready 💅');
 
     this.midiSounds.startPlayLoop(quarter.evaluate(), 100, 1 / 16);
+    this.setState((prevState) => (
+      {
+        ...prevState,
+        isPlaying: true,
+      }
+    ));
+  }
+
+  onStop() {
+    this.midiSounds.stopPlayLoop();
+    this.setState((prevState) => (
+      {
+        ...prevState,
+        isPlaying: false,
+      }
+    ));
+    this.clearLog();
   }
 
   render() {
@@ -104,9 +123,9 @@ Play beat A`,
           />
           <span
             className="button"
-            onClick={this.onCompile.bind(this)}
+            onClick={this.state.isPlaying ? this.onStop : this.onCompile}
           >
-            Compile
+            {this.state.isPlaying ? 'Stop' : 'Compile'}
           </span>
         </div>
         <div className="output">
