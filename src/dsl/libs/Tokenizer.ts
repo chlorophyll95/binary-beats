@@ -93,8 +93,6 @@ export default class Tokenizer {
     }
 
     public static makeTokenizer(code: string) : void {
-        if (this.theTokenizer == null){
-            this.theTokenizer = new Tokenizer(code);
-        }
+        this.theTokenizer = new Tokenizer(code);
     }
 }
