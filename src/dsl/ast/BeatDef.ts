@@ -7,6 +7,7 @@ import { BBType } from "../libs/BBTypes";
 class BeatDef extends Node {
   beatName: string;
   layers: Layer[] = [];
+  
   parse(): void {
     let tokenizer = Tokenizer.getTokenizer();
     tokenizer.getAndCheckNext('Create');
@@ -28,11 +29,11 @@ class BeatDef extends Node {
       tokenizer.getAndCheckNext('NEW_LINE');
     }
   }
+
   evaluate(): void {
-    let arr: any = []; // 3d array
-    // todo: wait until layer is implemented
-    SymbolTable.beats[this.beatName] = arr;
+    SymbolTable.beats[this.beatName] = this.layers;
   }
+
   nameAndTypeCheck(): void {
     if (SymbolTable.rhythms.hasOwnProperty(this.beatName)) {
       throw new Error(`Beat with name ${this.beatName} has already been defined.`);
