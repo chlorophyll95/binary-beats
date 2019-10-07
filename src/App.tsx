@@ -3,12 +3,16 @@ import Editor from 'react-simple-code-editor';
 import * as prism from 'prismjs';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
+import MIDISounds from 'midi-sounds-react';
 
 import Tokenizer from './dsl/libs/Tokenizer';
 import { BBProgram } from './dsl/ast/BBProgram';
+import DrumCodeMap from './dsl/libs/DrumCodeMap';
 
 import './App.css';
+import './syntax.css';
 
+import Quarters from './dsl/ast/Quarters';
 
 interface PropType {
 
@@ -16,11 +20,13 @@ interface PropType {
 
 interface State {
   code: string;
-  isSidebarOpen: boolean;
+  isPlaying: boolean;
   logs: string[];
 }
 
 class App extends Component<any, State> {
+  private midiSounds: any;
+
   constructor(props: PropType) {
     super(props);
 
@@ -36,12 +42,14 @@ Create beat A with layers:
   SNR: SNR1
   KCK: KCK1
 Play beat A`,
-      isSidebarOpen: false,
       logs: [],
+      isPlaying: false,
     };
 
     this.pushLog = this.pushLog.bind(this);
     this.clearLog = this.clearLog.bind(this);
+    this.onCompile = this.onCompile.bind(this);
+    this.onStop = this.onStop.bind(this);
   }
 
   pushLog(log: string) {
@@ -71,8 +79,32 @@ Play beat A`,
     this.pushLog('Tokenizing complete ✅');
     let program = new BBProgram();
 
+    let quarter = new Quarters();
+    quarter.setDrumCode(DrumCodeMap.getDrumCode('KCK'));
+    quarter.parse();
+    quarter.evaluate();
+
     // at the end
     this.pushLog('Beat ready 💅');
+
+    this.midiSounds.startPlayLoop(quarter.evaluate(), 100, 1 / 16);
+    this.setState((prevState) => (
+      {
+        ...prevState,
+        isPlaying: true,
+      }
+    ));
+  }
+
+  onStop() {
+    this.midiSounds.stopPlayLoop();
+    this.setState((prevState) => (
+      {
+        ...prevState,
+        isPlaying: false,
+      }
+    ));
+    this.clearLog();
   }
 
   render() {
@@ -91,25 +123,23 @@ Play beat A`,
           />
           <span
             className="button"
-            onClick={this.onCompile.bind(this)}
+            onClick={this.state.isPlaying ? this.onStop : this.onCompile}
           >
-            Compile
+            {this.state.isPlaying ? 'Stop' : 'Compile'}
           </span>
         </div>
         <div className="output">
           {
             this.state.logs.map((log: string) => (
-              <span>{log}</span>
+              <span key={log}>{log}</span>
             ))
           }
-          {/* <span>Reading Input...</span>
-          <span>Tokenizing...</span>
-          <span>Building AST...</span>
-          <span>Type Checking...</span>
-          <span>Evaluating...</span>
-          <span>Done ✅</span>
-          <span>Playing your loop 🔁</span> */}
         </div>
+        <MIDISounds
+          ref={(ref: any) => (this.midiSounds = ref)}
+          appElementName="root"
+          drums={[5, 15, 35]}
+        />
       </div>
     );
   }

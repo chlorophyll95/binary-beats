@@ -1,14 +1,27 @@
 import Rhythm from "./Rhythm";
 
 class Quarters extends Rhythm {
-  parse(): void {
-    throw new Error("Method not implemented.");
-  }  
-  evaluate(): void {
-    throw new Error("Method not implemented.");
+  constructor(drumCode: number = 0) {
+    super(drumCode);
   }
+
+  parse(): void {
+    this.tokenizer.getAndCheckNext("|");
+    this.pattern = this.tokenizer.getNext();
+
+    this.validate(4);
+
+    this.tokenizer.getAndCheckNext("|");
+  }
+
+  evaluate(): any {
+    console.log(this.buildArray(3));
+
+    return this.buildArray(3);
+  }
+
   nameAndTypeCheck(): void {
-    throw new Error("Method not implemented.");
+    // no names or types to check
   }
 }
 
