@@ -1,9 +1,10 @@
-import { Node } from "../libs/Node";
+import Rhythm from "./Rhythm";
 
-class Quarters extends Node {
+class Quarters extends Rhythm {
   parse(): void {
     throw new Error("Method not implemented.");
-  }  evaluate(): void {
+  }  
+  evaluate(): void {
     throw new Error("Method not implemented.");
   }
   nameAndTypeCheck(): void {

@@ -1,1 +1,4 @@
-export type BBType = 'rhythm' | 'beat';
+export enum BBType {
+    Rhythm,
+    Beat,
+}

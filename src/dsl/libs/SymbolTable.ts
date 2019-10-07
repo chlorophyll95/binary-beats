@@ -1,5 +1,6 @@
 export default class SymbolTable {
-  public static types = {};
-  public static rhythms = {};
-  public static beats = {};
+  // making the types 'any' for now
+  public static types : any = {};
+  public static rhythms : any = {};
+  public static beats : any = {};
 }

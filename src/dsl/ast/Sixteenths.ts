@@ -1,6 +1,6 @@
-import { Node } from "../libs/Node";
+import Rhythm from "./Rhythm";
 
-class Sixteenths extends Node {
+class Sixteenths extends Rhythm {
   parse(): void {
     throw new Error("Method not implemented.");
   }

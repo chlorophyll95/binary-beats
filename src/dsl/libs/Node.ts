@@ -7,7 +7,7 @@ export abstract class Node {
     abstract parse(): void;
 
     // evaluate AST to program
-    abstract evaluate(): void;
+    abstract evaluate(): any;
 
     // check that names and types match up
     abstract nameAndTypeCheck(): void;
