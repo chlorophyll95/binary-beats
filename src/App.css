@@ -67,6 +67,11 @@ body {
   background: linear-gradient(45deg, #e42b66, #e2433f);
 }
 
+.error_msg {
+  color: firebrick;
+  font-weight: 600;
+}
+
 .output {
   flex: 1;
   border-left: solid 1px #dadce0;

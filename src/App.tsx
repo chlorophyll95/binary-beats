@@ -13,6 +13,10 @@ import './App.css';
 import './syntax.css';
 
 import Quarters from './dsl/ast/Quarters';
+import Eighths from './dsl/ast/Eighths';
+import Sixteenths from './dsl/ast/Sixteenths';
+import Rhythm from './dsl/ast/Rhythm';
+import { string } from 'prop-types';
 
 interface PropType {
 
@@ -23,6 +27,8 @@ interface State {
   isPlaying: boolean;
   logs: string[];
 }
+
+const ERROR_STR = "ERROR: ";
 
 class App extends Component<any, State> {
   private midiSounds: any;
@@ -47,6 +53,7 @@ Play beat A`,
     };
 
     this.pushLog = this.pushLog.bind(this);
+    this.pushErrorMessage = this.pushErrorMessage.bind(this);
     this.clearLog = this.clearLog.bind(this);
     this.onCompile = this.onCompile.bind(this);
     this.onStop = this.onStop.bind(this);
@@ -64,6 +71,11 @@ Play beat A`,
     ));
   }
 
+  pushErrorMessage(msg: string) {
+    let err = ERROR_STR + msg;
+    this.pushLog(err);
+  }
+
   clearLog() {
     this.setState((previousState) => ({
       ...previousState,
@@ -75,25 +87,46 @@ Play beat A`,
     // do the stuff here
     this.clearLog();
     this.pushLog('Tokenizing code...');
-    let tokenizer = Tokenizer.makeTokenizer(this.state.code);
-    this.pushLog('Tokenizing complete ✅');
-    let program = new BBProgram();
+    try {
+      Tokenizer.makeTokenizer(this.state.code);
+      let tokenizer = Tokenizer.getTokenizer();
+      this.pushLog('Tokenizing complete ✅');
+      let program = new BBProgram();
 
-    let quarter = new Quarters();
-    quarter.setDrumCode(DrumCodeMap.getDrumCode('KCK'));
-    quarter.parse();
-    quarter.evaluate();
-
-    // at the end
-    this.pushLog('Beat ready 💅');
-
-    this.midiSounds.startPlayLoop(quarter.evaluate(), 100, 1 / 16);
-    this.setState((prevState) => (
-      {
-        ...prevState,
-        isPlaying: true,
+      // TEST FOR RHYTHM NODE ONLY
+      var rhythm : Rhythm;
+      if (tokenizer.checkToken('|')) {
+        rhythm = new Quarters();
       }
-    ));
+      else if (tokenizer.checkToken('[')) {
+        rhythm = new Eighths();
+      }
+      else if (tokenizer.checkToken('{')) {
+        rhythm = new Sixteenths();
+      }
+      else {
+        this.pushErrorMessage("UI can only support quarters, eighths, and sixteenths right now");
+        return;
+      }
+      
+      rhythm.setDrumCode(DrumCodeMap.getDrumCode('KCK'));
+      rhythm.parse();
+      rhythm.evaluate();
+
+      // at the end
+      this.pushLog('Beat ready 💅');
+
+      this.midiSounds.startPlayLoop(rhythm.evaluate(), 100, 1 / 16);
+      this.setState((prevState) => (
+        {
+          ...prevState,
+          isPlaying: true,
+        }
+      ));
+    }
+    catch (e) {
+      this.pushErrorMessage(e.message);
+    }
   }
 
   onStop() {
@@ -131,7 +164,10 @@ Play beat A`,
         <div className="output">
           {
             this.state.logs.map((log: string) => (
-              <span key={log}>{log}</span>
+              <span key={log} 
+                className={log.substring(0, 7) == ERROR_STR ? "error_msg" : ""}
+              >
+              {log}</span>
             ))
           }
         </div>
