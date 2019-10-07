@@ -6,10 +6,7 @@ class Quarters extends Node {
   }  evaluate(): void {
     throw new Error("Method not implemented.");
   }
-  nameCheck(): void {
-    throw new Error("Method not implemented.");
-  }
-  typeCheck(): void {
+  nameAndTypeCheck(): void {
     throw new Error("Method not implemented.");
   }
 }

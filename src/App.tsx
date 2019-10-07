@@ -66,6 +66,7 @@ class App extends Component<any, State> {
 
   onCompile() {
     // do the stuff here
+    this.clearLog();
     this.pushLog('Tokenizing code...');
     let tokenizer = Tokenizer.makeTokenizer(this.state.code);
     this.pushLog('Tokenizing complete ✅');

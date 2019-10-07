@@ -12,11 +12,7 @@ export class BBProgram extends Node {
         // todo
     }
 
-    public nameCheck(): void {
-        /// todo
-    }
-
-    public typeCheck(): void {
-        /// todo
-    }
+    public nameAndTypeCheck(): void {
+        throw new Error("Method not implemented.");
+      }
 }

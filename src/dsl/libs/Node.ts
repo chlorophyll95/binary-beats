@@ -3,12 +3,13 @@ export abstract class Node {
 
     protected tokenizer : Tokenizer = Tokenizer.getTokenizer();
 
+    // parse tokens into AST
     abstract parse(): void;
 
+    // evaluate AST to program
     abstract evaluate(): void;
 
-    abstract nameCheck(): void;
-
-    abstract typeCheck(): void;
+    // check that names and types match up
+    abstract nameAndTypeCheck(): void;
 
 }
