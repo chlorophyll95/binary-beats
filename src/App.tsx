@@ -16,7 +16,7 @@ import Quarters from './dsl/ast/Quarters';
 import Eighths from './dsl/ast/Eighths';
 import Sixteenths from './dsl/ast/Sixteenths';
 import Rhythm from './dsl/ast/Rhythm';
-import { string } from 'prop-types';
+import Orb from './ui/Orb';
 
 interface PropType {
 
@@ -26,6 +26,7 @@ interface State {
   code: string;
   isPlaying: boolean;
   logs: string[];
+  tempo: number;
 }
 
 const ERROR_STR = "ERROR: ";
@@ -50,6 +51,7 @@ Create beat A with layers:
 Play beat A`,
       logs: [],
       isPlaying: false,
+      tempo: 85,
     };
 
     this.pushLog = this.pushLog.bind(this);
@@ -91,6 +93,7 @@ Play beat A`,
       Tokenizer.makeTokenizer(this.state.code);
       let tokenizer = Tokenizer.getTokenizer();
       this.pushLog('Tokenizing complete ✅');
+
       let program = new BBProgram();
 
       // TEST FOR RHYTHM NODE ONLY
@@ -116,7 +119,7 @@ Play beat A`,
       // at the end
       this.pushLog('Beat ready 💅');
 
-      this.midiSounds.startPlayLoop(rhythm.evaluate(), 100, 1 / 16);
+      this.midiSounds.startPlayLoop(rhythm.evaluate(), this.state.tempo, 1 / 16);
       this.setState((prevState) => (
         {
           ...prevState,
@@ -162,6 +165,7 @@ Play beat A`,
           </span>
         </div>
         <div className="output">
+          <div className="terminal">
           {
             this.state.logs.map((log: string) => (
               <span key={log} 
@@ -170,6 +174,10 @@ Play beat A`,
               {log}</span>
             ))
           }
+          </div>
+          <div className="visualizer">
+            {this.state.isPlaying && <Orb tempo={this.state.tempo} />}
+          </div>
         </div>
         <MIDISounds
           ref={(ref: any) => (this.midiSounds = ref)}
