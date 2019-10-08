@@ -161,7 +161,7 @@ Play beat A`,
             className="button"
             onClick={this.state.isPlaying ? this.onStop : this.onCompile}
           >
-            {this.state.isPlaying ? 'Stop' : 'Compile'}
+            {this.state.isPlaying ? 'Stop' : 'Play'}
           </span>
         </div>
         <div className="output">
