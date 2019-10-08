@@ -8,6 +8,7 @@ import MIDISounds from 'midi-sounds-react';
 import Tokenizer from './dsl/libs/Tokenizer';
 import { BBProgram } from './dsl/ast/BBProgram';
 import DrumCodeMap from './dsl/libs/DrumCodeMap';
+import { loadSyntaxJs } from './prism-binary-beats';
 
 import './App.css';
 import './syntax.css';
@@ -16,7 +17,9 @@ import Quarters from './dsl/ast/Quarters';
 import Eighths from './dsl/ast/Eighths';
 import Sixteenths from './dsl/ast/Sixteenths';
 import Rhythm from './dsl/ast/Rhythm';
-import { string } from 'prop-types';
+import Orb from './ui/Orb';
+
+loadSyntaxJs(prism);
 
 interface PropType {
 
@@ -26,6 +29,7 @@ interface State {
   code: string;
   isPlaying: boolean;
   logs: string[];
+  tempo: number;
 }
 
 const ERROR_STR = "ERROR: ";
@@ -50,6 +54,7 @@ class App extends Component<any, State> {
           Play beat A`,
       logs: [],
       isPlaying: false,
+      tempo: 85,
     };
 
     this.pushLog = this.pushLog.bind(this);
@@ -92,10 +97,11 @@ class App extends Component<any, State> {
       Tokenizer.makeTokenizer(this.state.code);
       let tokenizer = Tokenizer.getTokenizer();
       this.pushLog('Tokenizing complete ✅');
+
       let program = new BBProgram();
       program.parse();
       // TEST FOR RHYTHM NODE ONLY
-      var rhythm : Rhythm;
+      var rhythm: Rhythm;
       if (tokenizer.checkToken('|')) {
         rhythm = new Quarters();
       }
@@ -109,7 +115,7 @@ class App extends Component<any, State> {
         this.pushErrorMessage("UI can only support quarters, eighths, and sixteenths right now");
         return;
       }
-      
+
       rhythm.setDrumCode(DrumCodeMap.getDrumCode('KCK'));
       rhythm.parse();
       rhythm.evaluate();
@@ -117,7 +123,7 @@ class App extends Component<any, State> {
       // at the end
       this.pushLog('Beat ready 💅');
 
-      this.midiSounds.startPlayLoop(rhythm.evaluate(), 100, 1 / 16);
+      this.midiSounds.startPlayLoop(rhythm.evaluate(), this.state.tempo, 1 / 16);
       this.setState((prevState) => (
         {
           ...prevState,
@@ -148,7 +154,7 @@ class App extends Component<any, State> {
           <Editor
             value={this.state.code}
             onValueChange={code => this.setState({ code })}
-            highlight={code => prism.highlight(code, prism.languages.javascript, 'javascript')}
+            highlight={code => prism.highlight(code, prism.languages.binaryBeats, 'javascript')}
             padding={10}
             style={{
               fontFamily: '"Fira Mono", "Fira Mono", monospace'
@@ -159,18 +165,23 @@ class App extends Component<any, State> {
             className="button"
             onClick={this.state.isPlaying ? this.onStop : this.onCompile}
           >
-            {this.state.isPlaying ? 'Stop' : 'Compile'}
+            {this.state.isPlaying ? 'Stop' : 'Play'}
           </span>
         </div>
         <div className="output">
+          <div className="terminal">
           {
             this.state.logs.map((log: string) => (
-              <span key={log} 
-                className={log.substring(0, 7) == ERROR_STR ? "error_msg" : ""}
+              <span key={log}
+                className={log.substring(0, 7) === ERROR_STR ? "error_msg" : ""}
               >
-              {log}</span>
+                {log}</span>
             ))
           }
+          </div>
+          <div className="visualizer">
+            {this.state.isPlaying && <Orb tempo={this.state.tempo} />}
+          </div>
         </div>
         <MIDISounds
           ref={(ref: any) => (this.midiSounds = ref)}

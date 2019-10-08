@@ -58,7 +58,7 @@ pre[class*="language-"] {
 }
 
 .token.tag, .token.attr-name, .token.namespace, .token.number, .token.unit, .token.hexcode, .token.deleted {
-  color: #e2777a;
+  color: #f87c32;
 }
 
 .token.property, .token.selector {

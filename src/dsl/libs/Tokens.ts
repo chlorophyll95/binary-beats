@@ -1,7 +1,3 @@
 export default class Tokens {
-    public static SUBDIVISIONS = "Subdivisions";
-
-    public static TAGS = "Tags";
-
-    // todo: add more tokens
+    public static NEW_LINE = "NEW_LINE";
 }
