@@ -1,0 +1,30 @@
+.container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .circle {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px 5px rgba(71, 225, 141, 0.3);
+    background-color: rgba(71, 225, 141, 1);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1.1);
+      background-color: white;
+    }
+    
+    50% {
+      transform: scale(1.5);
+    }
+    
+    100% {
+      transform: scale(1.1);
+    }
+  }

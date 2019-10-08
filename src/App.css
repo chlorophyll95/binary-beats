@@ -71,8 +71,22 @@ body {
   font-weight: 600;
 }
 
+.terminal {
+  display: flex;
+  flex-direction: column;
+  flex: 1
+}
+
+.visualizer {
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
 .output {
   flex: 1;
+  height: 100%;
   border-left: solid 1px #dadce0;
   background: #1c2022;
   color: #bbbbbb;
