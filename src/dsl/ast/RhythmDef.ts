@@ -42,6 +42,7 @@ class RhythmDef extends Node {
   }
 
   nameAndTypeCheck(): void {
+    this.validateName(this.rhythmName);
     if (SymbolTable.rhythms.hasOwnProperty(this.rhythmName)) {
       throw new Error(`Rhythm with name ${this.rhythmName} has already been defined.`);
     }
