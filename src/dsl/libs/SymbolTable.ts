@@ -9,4 +9,7 @@ export default class SymbolTable {
 
   // maps beat names to an array of Layer nodes
   public static beats : any = {};
+
+  // the tempo
+  public static tempo : number;
 }

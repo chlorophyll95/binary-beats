@@ -39,15 +39,15 @@ class App extends Component<any, State> {
     this.state = {
       code:
         `Set tempo to 120 bpm
-Rhythms:
-  Define HAT1 as {xxxxxxxxxxxxxxxx}
-  Define SNR1 as [--x---x-]
-  Define KCK1 as |x-x-|
-Create beat A with layers:
-  HAT: HAT1
-  SNR: SNR1
-  KCK: KCK1
-Play beat A`,
+          Rhythms:
+            Define HAT1 as {xxxxxxxxxxxxxxxx}
+            Define SNR1 as [--x---x-]
+            Define KCK1 as |x-x-|
+          Create beat A with layers:
+            HAT: HAT1
+            SNR: SNR1
+            KCK: KCK1
+          Play beat A`,
       logs: [],
       isPlaying: false,
     };
@@ -88,11 +88,12 @@ Play beat A`,
     this.clearLog();
     this.pushLog('Tokenizing code...');
     try {
+      console.log("starting");
       Tokenizer.makeTokenizer(this.state.code);
       let tokenizer = Tokenizer.getTokenizer();
       this.pushLog('Tokenizing complete ✅');
       let program = new BBProgram();
-
+      program.parse();
       // TEST FOR RHYTHM NODE ONLY
       var rhythm : Rhythm;
       if (tokenizer.checkToken('|')) {
