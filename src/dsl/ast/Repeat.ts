@@ -7,12 +7,14 @@ class Repeat extends Node {
   bars: Bar[];
 
   parse(): void {
+    console.log("Parsing repeat");
     let tokenizer = Tokenizer.getTokenizer();
     tokenizer.getAndCheckNext("(");
     // TODO: make sure to check if rhythm lengths are consistent here
 
     while(!tokenizer.checkToken(")")) {
       let bar = new Bar();
+      console.log("Found a bar!");
       bar.parse();
       this.bars.push(bar);
     };

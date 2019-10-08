@@ -26,6 +26,7 @@ class Bar extends Node {
       console.log("sixteenth")
     } else {
       this.rhythmName = tokenizer.getNext();
+      console.log("It's a Rhythm variable, not a Rhythm!")
     }
 
     if (this.rhythm) {

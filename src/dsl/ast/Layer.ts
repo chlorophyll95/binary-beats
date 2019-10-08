@@ -16,7 +16,7 @@ class Layer extends Node {
 
     tokenizer.getAndCheckNext(":");
 
-    while(!tokenizer.checkToken("NEW_LINE")) {
+    while (!tokenizer.checkToken("NEW_LINE")) {
       if (tokenizer.checkToken("(")) {
         let repeat = new Repeat();
         repeat.parse();
