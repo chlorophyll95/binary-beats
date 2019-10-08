@@ -15,9 +15,9 @@ export abstract class Node {
 
     // checks that name is valid (ie. not a reserved word and is alphanumeric)
     protected validateName(name: string): void {
-        var regexp = new RegExp(/^[a-zA-Z0-9-_]+$/);
+        var regexp = new RegExp(/^[A-Z0-9_]+$/);
         if (!regexp.test(name)) {
-            throw new Error("Beat and Rhythm names can only use letters, numbers, dashes, and hyphens");
+            throw new Error("Beat and Rhythm names can only use uppercase letters, numbers, and underscores.");
         }
 
         if (reservedWords.includes(name.toUpperCase())) {
