@@ -64,6 +64,7 @@ body {
 
 .button:hover {
   background: linear-gradient(45deg, #e42b66, #e2433f);
+  cursor: default;
 }
 
 .error_msg {

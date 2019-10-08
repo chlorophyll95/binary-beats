@@ -6,9 +6,6 @@ interface PropType {
 }
 
 export default class Orb extends Component<PropType, {}> {
-    constructor(props: PropType) {
-        super(props);
-    }
     render() {
         let tempo = this.props.tempo;
         let time = 60/tempo;
@@ -18,8 +15,8 @@ export default class Orb extends Component<PropType, {}> {
         return (
         <div className="keyframes">
             <div className="container">
-              <div className="circle" style={circleStyles}></div>  
-            </div>  
+              <div className="circle" style={circleStyles}></div>
+            </div>
           </div>
         );
     }
