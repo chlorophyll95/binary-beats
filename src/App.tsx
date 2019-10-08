@@ -8,6 +8,7 @@ import MIDISounds from 'midi-sounds-react';
 import Tokenizer from './dsl/libs/Tokenizer';
 import { BBProgram } from './dsl/ast/BBProgram';
 import DrumCodeMap from './dsl/libs/DrumCodeMap';
+import { loadSyntaxJs } from './prism-binary-beats';
 
 import './App.css';
 import './syntax.css';
@@ -16,7 +17,8 @@ import Quarters from './dsl/ast/Quarters';
 import Eighths from './dsl/ast/Eighths';
 import Sixteenths from './dsl/ast/Sixteenths';
 import Rhythm from './dsl/ast/Rhythm';
-import { string } from 'prop-types';
+
+loadSyntaxJs(prism);
 
 interface PropType {
 
@@ -94,7 +96,7 @@ Play beat A`,
       let program = new BBProgram();
 
       // TEST FOR RHYTHM NODE ONLY
-      var rhythm : Rhythm;
+      var rhythm: Rhythm;
       if (tokenizer.checkToken('|')) {
         rhythm = new Quarters();
       }
@@ -108,7 +110,7 @@ Play beat A`,
         this.pushErrorMessage("UI can only support quarters, eighths, and sixteenths right now");
         return;
       }
-      
+
       rhythm.setDrumCode(DrumCodeMap.getDrumCode('KCK'));
       rhythm.parse();
       rhythm.evaluate();
@@ -147,7 +149,7 @@ Play beat A`,
           <Editor
             value={this.state.code}
             onValueChange={code => this.setState({ code })}
-            highlight={code => prism.highlight(code, prism.languages.javascript, 'javascript')}
+            highlight={code => prism.highlight(code, prism.languages.binaryBeats, 'javascript')}
             padding={10}
             style={{
               fontFamily: '"Fira Mono", "Fira Mono", monospace'
@@ -164,10 +166,10 @@ Play beat A`,
         <div className="output">
           {
             this.state.logs.map((log: string) => (
-              <span key={log} 
-                className={log.substring(0, 7) == ERROR_STR ? "error_msg" : ""}
+              <span key={log}
+                className={log.substring(0, 7) === ERROR_STR ? "error_msg" : ""}
               >
-              {log}</span>
+                {log}</span>
             ))
           }
         </div>
