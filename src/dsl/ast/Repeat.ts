@@ -1,14 +1,21 @@
 import { Node } from "../libs/Node";
 import Tokenizer from "../libs/Tokenizer";
+import Bar from "./Bar";
 
 class Repeat extends Node {
   quantity: number;
+  bars: Bar[];
 
   parse(): void {
     let tokenizer = Tokenizer.getTokenizer();
     tokenizer.getAndCheckNext("(");
-    // make sure to check if rhythm lengths are consistent here
-    while()
+    // TODO: make sure to check if rhythm lengths are consistent here
+
+    while(!tokenizer.checkToken(")")) {
+      let bar = new Bar();
+      bar.parse();
+      this.bars.push(bar);
+    };
 
     tokenizer.getAndCheckNext(")");
     tokenizer.getAndCheckNext("*");
