@@ -3,6 +3,7 @@ import Tokenizer from "../libs/Tokenizer";
 import Layer from "./Layer";
 import SymbolTable from "../libs/SymbolTable";
 import { BBType } from "../libs/BBTypes";
+import Tokens from "../libs/Tokens";
 
 class BeatDef extends Node {
   beatName: string;
@@ -16,7 +17,7 @@ class BeatDef extends Node {
     tokenizer.getAndCheckNext('with');
     tokenizer.getAndCheckNext('layers');
     tokenizer.getAndCheckNext(':');
-    tokenizer.getAndCheckNext('NEW_LINE');
+    tokenizer.getAndCheckNext(Tokens.NEW_LINE);
 
     // parse each layer until end of beatdef is reached
     // assume (for now) that beatdef must be followed by another beatdef or play
@@ -26,7 +27,7 @@ class BeatDef extends Node {
       layer.parse();
       this.layers.push(layer);
       // each layer is separated by new line
-      tokenizer.getAndCheckNext('NEW_LINE');
+      tokenizer.getAndCheckNext(Tokens.NEW_LINE);
     }
   }
 
@@ -35,6 +36,7 @@ class BeatDef extends Node {
   }
 
   nameAndTypeCheck(): void {
+    this.validateName(this.beatName);
     if (SymbolTable.rhythms.hasOwnProperty(this.beatName)) {
       throw new Error(`Beat with name ${this.beatName} has already been defined.`);
     }

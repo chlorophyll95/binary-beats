@@ -1,3 +1,5 @@
+import Tokens from "./Tokens";
+
 export default class Tokenizer {
 
     private static theTokenizer : Tokenizer;
@@ -32,7 +34,7 @@ export default class Tokenizer {
             ':'
         ];
 
-        this.program = this.program.split('\n').join(' NEW_LINE ');
+        this.program = this.program.split('\n').join(` ${Tokens.NEW_LINE} `);
 
         for (let token of literals) {
             this.program = this.program.split(token).join(` ${token} `);
@@ -63,7 +65,7 @@ export default class Tokenizer {
             let token = this.tokens[this.currentTokenIdx];
             this.currentTokenIdx += 1;
             this.column += token.length;
-            if (token == "NEW_LINE") {
+            if (token === Tokens.NEW_LINE) {
                 this.line += 1;
             }
             return token;
