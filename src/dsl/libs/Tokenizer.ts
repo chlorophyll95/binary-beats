@@ -46,7 +46,7 @@ export default class Tokenizer {
         this.column = 0;
     }
 
-    private checkNext(): string | null {
+    public checkNext(): string | null {
         if (this.currentTokenIdx < this.tokens.length) {
             return this.tokens[this.currentTokenIdx];
         }

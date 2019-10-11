@@ -18,6 +18,8 @@ import Eighths from './dsl/ast/Eighths';
 import Sixteenths from './dsl/ast/Sixteenths';
 import Rhythm from './dsl/ast/Rhythm';
 import Orb from './ui/Orb';
+import { string } from 'prop-types';
+import Layer from './dsl/ast/Layer';
 
 loadSyntaxJs(prism);
 
@@ -98,6 +100,19 @@ Play beat A`,
       this.pushLog('Tokenizing complete ✅');
 
       let program = new BBProgram();
+
+      console.log(tokenizer.getLine());
+
+      // TEST FOR LAYER NODE ONLY
+      // let layer = new Layer();
+      
+      // layer.parse();
+      // debugger;
+      // layer.evaluate();
+
+      // debugger;
+      // return;
+
 
       // TEST FOR RHYTHM NODE ONLY
       var rhythm: Rhythm;
