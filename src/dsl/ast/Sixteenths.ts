@@ -12,6 +12,7 @@ class Sixteenths extends Rhythm {
     this.validate(16);
 
     this.tokenizer.getAndCheckNext("}");
+    console.log("done parsing 16th");
   }
 
   evaluate(): any {

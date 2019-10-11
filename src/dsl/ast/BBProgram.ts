@@ -5,12 +5,15 @@ import Tempo from "./Tempo";
 import RhythmDef from "./RhythmDef";
 import BeatDef from "./BeatDef";
 import Play from "./Play";
+import { reservedWords } from "../libs/ReservedWords";
+import Tokens from "../libs/Tokens";
+import RhythmBlock from "./RhythmBlock";
 
 export class BBProgram extends Node {
-    nodes: Node[];
+    nodes: Node[] = [];
 
     public parse(): void {
-        console.log("came to parse");
+        this.tokenizer.checkToken("Set");
         while(this.tokenizer.hasNext()) {
             console.log("inside loop");
             let s: Node;
@@ -18,10 +21,9 @@ export class BBProgram extends Node {
                 console.log("Found Set")
                 s = new Tempo();
             }
-            else if(this.tokenizer.getAndCheckNext("Rhythms")){
-                console.log("Found Rhythms")
-                this.tokenizer.getAndCheckNext(":");
-                s = new RhythmDef();
+            else if(this.tokenizer.checkToken("Rhythms")){
+                console.log("Found RhythmsBlock")
+                s = new RhythmBlock();
             }
             else if(this.tokenizer.checkToken("Create")){
                 console.log("Found Create")
@@ -32,16 +34,17 @@ export class BBProgram extends Node {
                 s = new Play();
             }
             else{
+                console.log("couldnt find anything else");
                 break;
             }
-
+            console.log("node: "+ s);
             s.parse();
             this.nodes.push(s);
-            break;
-
+            //this.tokenizer.skipLine();
         }
     }
 
+    
     public evaluate(): void {
         this.nodes.forEach( (node) => {
             node.evaluate();
@@ -52,5 +55,5 @@ export class BBProgram extends Node {
         this.nodes.forEach( (node) => {
             node.nameAndTypeCheck();
         });
-      }
+    }
 }

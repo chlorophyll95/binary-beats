@@ -100,6 +100,7 @@ class App extends Component<any, State> {
 
       let program = new BBProgram();
       program.parse();
+      console.log("finished parsing");
       // TEST FOR RHYTHM NODE ONLY
       var rhythm: Rhythm;
       if (tokenizer.checkToken('|')) {
