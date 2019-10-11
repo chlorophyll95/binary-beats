@@ -4,10 +4,18 @@ import Quarters from "./Quarters";
 import Rhythm from "./Rhythm";
 import Eighths from "./Eighths";
 import Sixteenths from "./Sixteenths";
+import SymbolTable from "../libs/SymbolTable";
 
 class Bar extends Node {
   rhythm?: Rhythm;
   rhythmName?: string;
+  drumCode: number;
+
+  constructor(drumCode: number = 0) {
+    super();
+
+    this.drumCode = drumCode;
+  }
   
   parse(): void {
     let tokenizer = Tokenizer.getTokenizer();
@@ -28,8 +36,18 @@ class Bar extends Node {
       this.rhythm.parse();
     }
   }
-  evaluate(): void {
-    throw new Error("Method not implemented.");
+  evaluate(): number[][][] {
+    let retrievedRhythm;
+
+    if (this.rhythm) {
+      this.rhythm.setDrumCode(this.drumCode);
+      retrievedRhythm = this.rhythm.evaluate();
+
+    } else if (this.rhythmName) { // it's a rhythmName
+      retrievedRhythm = SymbolTable.rhythms[this.rhythmName];
+    }
+
+    return retrievedRhythm;
   }
   nameAndTypeCheck(): void {
     throw new Error("Method not implemented.");

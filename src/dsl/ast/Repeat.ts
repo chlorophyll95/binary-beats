@@ -5,6 +5,13 @@ import Bar from "./Bar";
 class Repeat extends Node {
   quantity: number = 1; // in cases of (VARIABLE)
   bars: Bar[] = [];
+  drumCode: number;
+
+  constructor(drumCode: number = 0) {
+    super();
+
+    this.drumCode = drumCode;
+  }
 
   parse(): void {
     let tokenizer = Tokenizer.getTokenizer();
@@ -12,7 +19,7 @@ class Repeat extends Node {
     // TODO: make sure to check if rhythm lengths are consistent here
 
     while(!tokenizer.checkToken(")")) {
-      let bar = new Bar();
+      let bar = new Bar(this.drumCode);
       bar.parse();
       this.bars.push(bar);
     };
@@ -24,9 +31,21 @@ class Repeat extends Node {
       this.quantity = parseInt(tokenizer.getNext());
     } 
   }
-  evaluate(): void {
-    throw new Error("Method not implemented.");
+  evaluate(): any {
+    let repeatedStanzaArray = [];
+    let stanzaArray = []; // TODO: name these better
+    for (let bar of this.bars) {
+      stanzaArray.push(bar.evaluate());
+    }
+
+    debugger;
+    for (let repeats = 0; repeats < this.quantity; repeats++) {
+      repeatedStanzaArray.push(stanzaArray);
+    }
+
+    return repeatedStanzaArray.flat(2);
   }
+
   nameAndTypeCheck(): void {
     throw new Error("Method not implemented.");
   }

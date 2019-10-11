@@ -107,7 +107,10 @@ Play beat A`,
       // let layer = new Layer();
       
       // layer.parse();
+      // debugger;
+      // layer.evaluate();
 
+      // debugger;
       // return;
 
 
