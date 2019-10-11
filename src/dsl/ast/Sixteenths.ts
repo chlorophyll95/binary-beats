@@ -15,7 +15,7 @@ class Sixteenths extends Rhythm {
     console.log("done parsing 16th");
   }
 
-  evaluate(): any {
+  evaluate(): number[][][] {
     console.log(this.buildArray(0));
 
     return this.buildArray(0);

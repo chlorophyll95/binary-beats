@@ -14,7 +14,7 @@ class Eighths extends Rhythm {
     this.tokenizer.getAndCheckNext("]");
   }
 
-  evaluate(): any {
+  evaluate(): number[][][] {
     console.log(this.buildArray(1));
 
     return this.buildArray(1);

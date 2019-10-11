@@ -106,6 +106,7 @@ class App extends Component<any, State> {
       console.log(tokenizer.getLine());
 
 
+
       // TEST FOR RHYTHM NODE ONLY
       var rhythm: Rhythm;
       if (tokenizer.checkToken('|')) {
