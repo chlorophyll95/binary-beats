@@ -5,6 +5,7 @@ import { DrumType } from "./DrumType";
 import Repeat from "./Repeat";
 import Bar from "./Bar";
 import DrumCodeMap from "../libs/DrumCodeMap";
+import ErrorUtil from "../libs/ErrorUtil";
 
 class Layer extends Node {
   drumCode: number = 0;
@@ -18,6 +19,8 @@ class Layer extends Node {
 
     tokenizer.getAndCheckNext(":");
 
+    let numLoops: number = 0;
+
     while (!tokenizer.checkAhead(":") && !tokenizer.checkToken("Play") && !tokenizer.checkToken("Create")) {
       if (tokenizer.checkToken("(")) {
         let repeat = new Repeat(this.drumCode);
@@ -28,6 +31,9 @@ class Layer extends Node {
         bar.parse();
         this.barsOrRepeats.push(bar);
       }
+
+      // loop check
+      ErrorUtil.loopCheck("Layer", ++numLoops, 200);
     }
     console.log("Drum Type:", this.drumCode);
     console.log("Bars/Repeats:", this.barsOrRepeats);
@@ -42,7 +48,7 @@ class Layer extends Node {
     
     return layerArr.flat();
   }
-  
+
   nameAndTypeCheck(): void {
     // not sure what to do here atm. skip for now
   }

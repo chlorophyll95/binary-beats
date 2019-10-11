@@ -5,6 +5,7 @@ import Rhythm from "./Rhythm";
 import Eighths from "./Eighths";
 import Sixteenths from "./Sixteenths";
 import SymbolTable from "../libs/SymbolTable";
+import ErrorUtil from "../libs/ErrorUtil";
 
 class Bar extends Node {
   rhythm?: Rhythm;
@@ -42,7 +43,7 @@ class Bar extends Node {
     if (!this.rhythm && this.rhythmName) { // it's a rhythmName
       rhythm = SymbolTable.rhythms.get(this.rhythmName);
       if (rhythm === undefined){
-        throw new Error(`Undeclared rhythm ${this.rhythmName}`);
+        ErrorUtil.varUndefind(this.rhythmName);
       }
     }
     
@@ -53,10 +54,9 @@ class Bar extends Node {
   nameAndTypeCheck(): void {
     if (this.rhythmName){
       if(!SymbolTable.rhythms.has(this.rhythmName)){
-        throw new Error("The rhythm: " + this.rhythmName + " is not defind");
+        ErrorUtil.varUndefind(this.rhythmName);
       }
     }
-    // not sure what this is supposed to check atm
   }
 }
 

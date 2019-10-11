@@ -3,6 +3,7 @@ import Tokenizer from "../libs/Tokenizer";
 import Layer from "./Layer";
 import SymbolTable from "../libs/SymbolTable";
 import { BBType } from "../libs/BBTypes";
+import ErrorUtil from "../libs/ErrorUtil";
 
 class BeatDef extends Node {
   beatName: string;
@@ -20,12 +21,15 @@ class BeatDef extends Node {
 
     // parse each layer until end of beatdef is reached
     // assume (for now) that beatdef must be followed by another beatdef or play
+    let numLoops: number = 0;
+
     while (!tokenizer.checkToken("Create") && !tokenizer.checkToken("Play")) {
       let layer = new Layer();
       layer.parse();
       this.layers.push(layer);
-      // each layer is separated by new line
-      //tokenizer.getAndCheckNext(Tokens.NEW_LINE);
+      
+      // loop check
+      ErrorUtil.loopCheck("Beat", ++numLoops, 50);
     }
   }
 
@@ -63,7 +67,7 @@ class BeatDef extends Node {
   nameAndTypeCheck(): void {
     this.validateName(this.beatName);
     if (SymbolTable.rhythms.has(this.beatName)) {
-      throw new Error(`Beat with name ${this.beatName} has already been defined.`);
+      ErrorUtil.varDuplicate(this.beatName);
     }
     SymbolTable.types.set(this.beatName, BBType.Beat);
   }

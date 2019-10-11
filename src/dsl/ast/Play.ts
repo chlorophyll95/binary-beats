@@ -1,5 +1,6 @@
 import { Node } from "../libs/Node";
 import SymbolTable from "../libs/SymbolTable";
+import ErrorUtil from "../libs/ErrorUtil";
 
 class Play extends Node {
   playBeats: string[] = [];
@@ -21,7 +22,7 @@ class Play extends Node {
           ret.push(b);
         }
       } else {
-        throw new Error("Beat " + beat + " has not been declared");
+        ErrorUtil.varUndefind(beat);
       }
     }
     
