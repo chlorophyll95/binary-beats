@@ -48,7 +48,7 @@ class Repeat extends Node {
   }
 
   nameAndTypeCheck(): void {
-    throw new Error("Method not implemented.");
+    // not sure what to check here atm
   }
 }
 

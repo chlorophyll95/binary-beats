@@ -23,7 +23,8 @@ class RhythmBlock extends Node {
   }
 
   nameAndTypeCheck(): void {
-    throw new Error("Method not implemented.");
+    // not sure what to put here atm
+    // RythmDef will already check for duplicate variables
   }
 }
 

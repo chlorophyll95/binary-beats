@@ -39,11 +39,12 @@ class Layer extends Node {
     for (let barOrRepeat of this.barsOrRepeats) {
       layerArr.push(barOrRepeat.evaluate());
     }
-
+    
     return layerArr.flat();
   }
+  
   nameAndTypeCheck(): void {
-    throw new Error("Method not implemented.");
+    // not sure what to do here atm. skip for now
   }
 }
 

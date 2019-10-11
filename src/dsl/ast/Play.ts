@@ -20,6 +20,8 @@ class Play extends Node {
         for (let b of fullBeat) {
           ret.push(b);
         }
+      } else {
+        throw new Error("Beat " + beat + " has not been declared");
       }
     }
     
@@ -27,12 +29,8 @@ class Play extends Node {
   }
   
   nameAndTypeCheck(): void {
-    // check if the beat variable is actually in the list
-    for (let beat in this.playBeats) {
-      if (!this.playBeats.includes(beat)) {
-        throw new Error("Beat " + beat + " has not been declared");
-      }
-    }
+    // idk what to put here
+    // can't check if beat var is in SymbolTable since it hasnt been populated yet
   }
 }
 

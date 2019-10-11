@@ -51,7 +51,12 @@ class Bar extends Node {
   }
 
   nameAndTypeCheck(): void {
-    throw new Error("Method not implemented.");
+    if (this.rhythmName){
+      if(!SymbolTable.rhythms.has(this.rhythmName)){
+        throw new Error("The rhythm: " + this.rhythmName + " is not defind");
+      }
+    }
+    // not sure what this is supposed to check atm
   }
 }
 

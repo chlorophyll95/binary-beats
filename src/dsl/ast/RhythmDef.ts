@@ -9,7 +9,7 @@ import Sixteenths from "./Sixteenths";
 
 class RhythmDef extends Node {
   // example: Define HAT1 as [x-x-x-x-]
-  rhythmName: string = "";
+  public rhythmName: string = "";
   rhythm!: Rhythm;
 
   parse(): void {

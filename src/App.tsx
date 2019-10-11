@@ -36,7 +36,7 @@ class App extends Component<any, State> {
     super(props);
 
     this.state = {
-      code: tests.case2,
+      code: tests.case1,
       logs: [],
       isPlaying: false,
       tempo: 85,
@@ -84,7 +84,7 @@ class App extends Component<any, State> {
 
       let program = new BBProgram();
       program.parse();
-
+      program.nameAndTypeCheck();
       // at the end
       this.pushLog('Beat ready 💅');
       this.midiSounds.startPlayLoop(program.evaluate(), SymbolTable.tempo, 1 / 16);
