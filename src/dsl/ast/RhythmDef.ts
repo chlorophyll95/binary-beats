@@ -36,7 +36,6 @@ class RhythmDef extends Node {
   }
 
   // saves rhythm to rhythm name
-  // TODO: test this after rhythm is done
   evaluate(): void {
     SymbolTable.rhythms.set(this.rhythmName, this.rhythm);
   }

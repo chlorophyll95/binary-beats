@@ -21,5 +21,6 @@ export const reservedWords = [
     'HAT',
     'CSH',
     'RDE',
+    'OHT',
     'CLP'
 ]
