@@ -103,11 +103,12 @@ Play beat A`,
 
       console.log(tokenizer.getLine());
 
-      let layer = new Layer();
+      // TEST FOR LAYER NODE ONLY
+      // let layer = new Layer();
       
-      layer.parse();
+      // layer.parse();
 
-      return;
+      // return;
 
 
       // TEST FOR RHYTHM NODE ONLY
