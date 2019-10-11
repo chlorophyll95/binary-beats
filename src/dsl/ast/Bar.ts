@@ -19,7 +19,6 @@ class Bar extends Node {
   
   parse(): void {
     let tokenizer = Tokenizer.getTokenizer();
-    console.log("came to parse bar");
     if (tokenizer.checkToken("|")) {
       this.rhythm = new Quarters();
     }
@@ -29,7 +28,6 @@ class Bar extends Node {
     else if (tokenizer.checkToken("{")) {
       this.rhythm = new Sixteenths();
     } else {
-      console.log("cam eto get next");
       this.rhythmName = tokenizer.getNext();
     }
 
@@ -37,19 +35,22 @@ class Bar extends Node {
       this.rhythm.parse();
     }
   }
-  evaluate(): number[][][] {
-    let retrievedRhythm;
 
-    if (this.rhythm) {
-      this.rhythm.setDrumCode(this.drumCode);
-      retrievedRhythm = this.rhythm.evaluate();
-
-    } else if (this.rhythmName) { // it's a rhythmName
-      retrievedRhythm = SymbolTable.rhythms[this.rhythmName];
+  evaluate(): number[] {
+    console.log("Eval: Bar");
+    let rhythm: Rhythm = this.rhythm;
+    
+    if (!this.rhythm && this.rhythmName) { // it's a rhythmName
+      rhythm = SymbolTable.rhythms.get(this.rhythmName);
+      if (rhythm == undefined){
+        throw new Error(`Undeclared rhythm ${this.rhythmName}`);
+      }
     }
-
-    return retrievedRhythm;
+    
+    rhythm.setDrumCode(this.drumCode);
+    return rhythm.evaluate();
   }
+
   nameAndTypeCheck(): void {
     throw new Error("Method not implemented.");
   }

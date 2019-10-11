@@ -11,15 +11,15 @@ class RhythmBlock extends Node {
     while(this.tokenizer.checkToken("Define")){
       let s: Node = new RhythmDef();
       s.parse();
-      this.rhythmDefs.push();
+      this.rhythmDefs.push(s);
     }
-    console.log("done parsing rhythm block");
   }
 
   evaluate(): void {
-    this.rhythmDefs.forEach(element => {
+    console.log("Eval: RythmBlock");
+    for (let element of this.rhythmDefs) {
       element.evaluate();
-    });
+    }
   }
 
   nameAndTypeCheck(): void {

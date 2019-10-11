@@ -14,9 +14,7 @@ class Quarters extends Rhythm {
     this.tokenizer.getAndCheckNext("|");
   }
 
-  evaluate(): number[][][] {
-    console.log(this.buildArray(3));
-
+  evaluate(): number[] {
     return this.buildArray(3);
   }
 

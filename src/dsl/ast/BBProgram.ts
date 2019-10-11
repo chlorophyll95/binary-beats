@@ -13,9 +13,7 @@ export class BBProgram extends Node {
     nodes: Node[] = [];
 
     public parse(): void {
-        this.tokenizer.checkToken("Set");
         while(this.tokenizer.hasNext()) {
-            console.log("inside loop");
             let s: Node;
             if(this.tokenizer.checkToken("Set")){
                 console.log("Found Set")
@@ -37,23 +35,26 @@ export class BBProgram extends Node {
                 console.log("couldnt find anything else");
                 break;
             }
-            console.log("node: "+ s);
             s.parse();
             this.nodes.push(s);
-            //this.tokenizer.skipLine();
         }
     }
 
     
-    public evaluate(): void {
-        this.nodes.forEach( (node) => {
-            node.evaluate();
-        });
+    public evaluate(): any[] {
+        let ret : any[];
+        for (let node of this.nodes){
+            ret = node.evaluate();
+        }
+        
+        console.log("Returns:");
+        console.log(ret);
+        return ret;
     }
 
     public nameAndTypeCheck(): void {
-        this.nodes.forEach( (node) => {
+        for (let node of this.nodes) {
             node.nameAndTypeCheck();
-        });
+        }
     }
 }
