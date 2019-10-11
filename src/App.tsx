@@ -44,7 +44,7 @@ class App extends Component<any, State> {
     super(props);
 
     this.state = {
-      code: tests.case3,
+      code: tests.plainJane,
       logs: [],
       isPlaying: false,
       tempo: 85,

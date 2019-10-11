@@ -35,19 +35,17 @@ class BeatDef extends Node {
     console.log("Eval: BeatDef");
     let evalLayers : any[][] = [];
     for (let i: number = 0; i < 16; i++){
-      let newArry = [];
+      let subset = [];
       for(let j: number = 0; j < this.layers.length; j++){
         let layer = this.layers[j].evaluate();
         let singleBeat = layer[i];
         if (singleBeat !== 0){
-          newArry.push(singleBeat);
+          subset.push(singleBeat);
         }
       }
-      evalLayers.push([newArry, []]);
+      evalLayers.push([subset, []]);
     }
-    console.log("evalarry");
-    console.log(evalLayers);
-   
+
     SymbolTable.beats.set(this.beatName, evalLayers);
   }
 

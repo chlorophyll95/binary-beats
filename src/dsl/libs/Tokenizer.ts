@@ -94,6 +94,19 @@ export default class Tokenizer {
         return s;
     }
 
+    // throws an error if not expected token but will not get the token
+    public checkTokenStrict(token: string): boolean {
+        let s = this.checkNext();
+        let ret = true;
+        if (token !== s) {
+            ret = false;
+            throw new Error(
+                `Unexpected token ${s} instead of ${token} at line: ${this.line} and column: ${this.column}`
+            )
+        }
+        return ret;
+    }
+
     public hasNext(): boolean {
         return this.checkNext() !== null;
     }

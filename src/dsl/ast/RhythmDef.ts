@@ -39,7 +39,6 @@ class RhythmDef extends Node {
   // TODO: test this after rhythm is done
   evaluate(): void {
     SymbolTable.rhythms.set(this.rhythmName, this.rhythm);
-    //SymbolTable.rhythms[this.rhythmName] = this.rhythm;
   }
 
   nameAndTypeCheck(): void {

@@ -13,31 +13,26 @@ export class BBProgram extends Node {
     nodes: Node[] = [];
 
     public parse(): void {
-        while(this.tokenizer.hasNext()) {
-            let s: Node;
-            if(this.tokenizer.checkToken("Set")){
-                console.log("Found Set")
-                s = new Tempo();
-            }
-            else if(this.tokenizer.checkToken("Rhythms")){
-                console.log("Found RhythmsBlock")
-                s = new RhythmBlock();
-            }
-            else if(this.tokenizer.checkToken("Create")){
-                console.log("Found Create")
-                s = new BeatDef();
-            }
-            else if(this.tokenizer.checkToken("Play")){
-                console.log("Found Play")
-                s = new Play();
-            }
-            else{
-                console.log("couldnt find anything else");
-                break;
-            }
-            s.parse();
-            this.nodes.push(s);
+        if(this.tokenizer.checkTokenStrict("Set")){
+            this.startParse("Set", new Tempo);
         }
+        if(this.tokenizer.checkToken("Rhythms")){
+            this.startParse("Rhythms", new RhythmBlock);
+        }
+        if(this.tokenizer.checkTokenStrict("Create")){
+            while(this.tokenizer.checkToken("Create")){
+                this.startParse("Create", new BeatDef);
+            }
+        }
+        if(this.tokenizer.checkTokenStrict("Play")){
+            this.startParse("Play", new Play);
+        }  
+    }
+
+    private startParse(name: string, node: Node){
+        console.log("Parsing: " + name);
+        node.parse();
+        this.nodes.push(node);
     }
 
     

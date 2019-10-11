@@ -6,7 +6,6 @@ class Play extends Node {
 
   parse(): void {
     this.tokenizer.getAndCheckNext("Play");
-    this.tokenizer.getAndCheckNext("beat");
     while(this.tokenizer.hasNext()){
       this.playBeats.push(this.tokenizer.getNext());
     }

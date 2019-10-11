@@ -7,7 +7,7 @@ export default class tests {
       OHT: ({------x---------})*4
     Play A`;
 
-    public static twoSimpleBeats: string = `Set tempo to 120 bpm
+    public static twoSimpleBeatsA: string = `Set tempo to 120 bpm
     Rhythms:
       Define HAT1 as {xxxxxxxxxxxxxxxx}
       Define SNR1 as [--x---x-]
@@ -20,7 +20,37 @@ export default class tests {
       HAT: KCK1
       SNR: SNR1
       KCK: HAT1 
-    Play beat A B`;
+    Play A B`;
+
+    public static twoSimpleBeatsB: string = `Set tempo to 120 bpm
+    Rhythms:
+      Define HAT1 as {xxxxxxxxxxxxxxxx}
+      Define SNR1 as [--x---x-]
+      Define KCK1 as |x-x-|
+    Create beat A with layers:
+      HAT: {xxxxxxxxxxxxxxxx}
+      SNR: [--x---x-]
+      KCK: KCK1
+    Create beat B with layers:
+      HAT: KCK1
+      SNR: SNR1
+      KCK: HAT1 
+    Play A B`;
+
+    public static twoSimpleBeatsC: string = `Set tempo to 120 bpm
+    Rhythms:
+      Define HAT1 as {xxxxxxxxxxxxxxxx}
+      Define SNR1 as [--x---x-]
+      Define KCK1 as |x-x-|
+    Create beat A with layers:
+      HAT: ({xxxx-x-xxxxxxxxx})*4
+      SNR: [--x---x-]
+      KCK: (|-x-x|)*4
+    Create beat B with layers:
+      HAT: KCK1
+      SNR: SNR1
+      KCK: HAT1 
+    Play A B`;
 
     public static case1: string = `Set tempo to 85 bpm 
     Rhythms:
@@ -31,7 +61,7 @@ export default class tests {
       SNR: (|-x-x|)*4 
       KCK: ({x-----xx--x-----})*2 ({x-----xx--x-x--x})*2 
       OHT: ({----------------})*4 
-    Play beat INTRO VERSE`;
+    Play INTRO VERSE`;
     
     public static case2: string = `Set tempo to 85 bpm 
     Rhythms:
@@ -44,7 +74,7 @@ export default class tests {
       SNR: (|-x-x|)*4 
       KCK: ({x-----xx--x-----})*2 ({x-----xx--x-x--x})*2 
       OHT: ({----------------})*4 
-    Play beat INTRO VERSE`;
+    Play INTRO VERSE`;
 
     public static case3: string = `Set tempo to 85 bpm 
     Create beat VERSE with layers: 
@@ -52,8 +82,7 @@ export default class tests {
       SNR: (|-x-x|)*4 
       KCK: ({x-----xx--x-----})*2 ({x-----xx--x-x--x})*2 
       OHT: ({----------------})*4 
-    Play beat VERSE
-    `;
+    Play VERSE`;
 
     
 }
