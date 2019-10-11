@@ -41,7 +41,9 @@ class Layer extends Node {
       layerArr.push(barOrRepeat.evaluate());
     }
 
+    console.log(layerArr.flat(2));
     debugger;
+
     return layerArr;
 
   }

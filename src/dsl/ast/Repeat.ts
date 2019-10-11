@@ -16,8 +16,6 @@ class Repeat extends Node {
   parse(): void {
     let tokenizer = Tokenizer.getTokenizer();
     tokenizer.getAndCheckNext("(");
-    // TODO: make sure to check if rhythm lengths are consistent here
-
     while(!tokenizer.checkToken(")")) {
       let bar = new Bar(this.drumCode);
       bar.parse();
@@ -29,6 +27,10 @@ class Repeat extends Node {
     if (tokenizer.checkNext() === "*") {
       tokenizer.getAndCheckNext("*");
       this.quantity = parseInt(tokenizer.getNext());
+      
+      if (isNaN(this.quantity)) {
+        throw new Error(`Illegal token at line: ${this.tokenizer.line} column: ${this.tokenizer.column}. Value must be a number.`)
+      }
     } 
   }
   evaluate(): any {

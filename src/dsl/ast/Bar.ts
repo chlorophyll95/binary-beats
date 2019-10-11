@@ -43,12 +43,17 @@ class Bar extends Node {
       this.rhythm.setDrumCode(this.drumCode);
       retrievedRhythm = this.rhythm.evaluate();
 
-    } else if (this.rhythmName) { // it's a rhythmName
-      retrievedRhythm = SymbolTable.rhythms[this.rhythmName];
+    } else if (this.rhythmName) {
+      if (SymbolTable.rhythms[this.rhythmName] == undefined) {
+        throw new Error(`Undeclared rhythm ${this.rhythmName}`);
+      } else {
+        retrievedRhythm = SymbolTable.rhythms[this.rhythmName];
+      }
     }
 
     return retrievedRhythm;
   }
+
   nameAndTypeCheck(): void {
     throw new Error("Method not implemented.");
   }
