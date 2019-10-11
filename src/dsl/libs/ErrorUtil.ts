@@ -6,11 +6,11 @@ export default class ErrorUtil {
         }
     }
 
-    public static varUndefind(name: string): void {
-        throw new Error(`${name} is undefind.`);
+    public static varUndefined(name: string): void {
+        throw new Error(`${name} is undefined.`);
     }
 
     public static varDuplicate(name: string): void {
-        throw new Error(`${name} is already defind.`);
+        throw new Error(`${name} is already defined.`);
     }
 }

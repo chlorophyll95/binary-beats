@@ -14,6 +14,9 @@ import './syntax.css';
 import Orb from './ui/Orb';
 import SymbolTable from './dsl/libs/SymbolTable';
 import tests from './tests';
+import { BBType } from './dsl/libs/BBTypes';
+import Rhythm from './dsl/ast/Rhythm';
+import DrumCodeMap from './dsl/libs/DrumCodeMap';
 loadSyntaxJs(prism);
 
 interface PropType {
@@ -36,7 +39,7 @@ class App extends Component<any, State> {
     super(props);
 
     this.state = {
-      code: tests.case1,
+      code: tests.case2,
       logs: [],
       isPlaying: false,
       tempo: 85,
@@ -47,6 +50,8 @@ class App extends Component<any, State> {
     this.clearLog = this.clearLog.bind(this);
     this.onCompile = this.onCompile.bind(this);
     this.onStop = this.onStop.bind(this);
+    this.reset = this.reset.bind(this);
+    this.clearSymbolTable = this.clearSymbolTable.bind(this);
   }
 
   pushLog(log: string) {
@@ -66,6 +71,17 @@ class App extends Component<any, State> {
     this.pushLog(err);
   }
 
+  reset() {
+    this.clearLog();
+    this.clearSymbolTable();
+  }
+
+  clearSymbolTable() {
+    SymbolTable.types = new Map<string, BBType>(); 
+    SymbolTable.rhythms = new Map<string, Rhythm>(); 
+    SymbolTable.beats = new Map<string, any[]>();
+  }
+
   clearLog() {
     this.setState((previousState) => ({
       ...previousState,
@@ -75,7 +91,7 @@ class App extends Component<any, State> {
 
   onCompile() {
     // do the stuff here
-    this.clearLog();
+    this.reset();
     this.pushLog('Tokenizing code...');
     try {
       console.log("starting");
@@ -92,6 +108,7 @@ class App extends Component<any, State> {
         {
           ...prevState,
           isPlaying: true,
+          tempo: SymbolTable.tempo,
         }
       ));
     }
@@ -126,7 +143,7 @@ class App extends Component<any, State> {
             className="container__editor"
           />
           <span
-            className="button"
+            className={this.state.code.trim().length == 0? "button disabled":"button"}
             onClick={this.state.isPlaying ? this.onStop : this.onCompile}
           >
             {this.state.isPlaying ? 'Stop' : 'Play'}
@@ -150,7 +167,7 @@ class App extends Component<any, State> {
         <MIDISounds
           ref={(ref: any) => (this.midiSounds = ref)}
           appElementName="root"
-          drums={[5, 15, 35]}
+          drums={DrumCodeMap.drumCodes}
         />
       </div>
     );

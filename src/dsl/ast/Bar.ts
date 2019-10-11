@@ -43,7 +43,7 @@ class Bar extends Node {
     if (!this.rhythm && this.rhythmName) { // it's a rhythmName
       rhythm = SymbolTable.rhythms.get(this.rhythmName);
       if (rhythm === undefined){
-        ErrorUtil.varUndefind(this.rhythmName);
+        ErrorUtil.varUndefined(this.rhythmName);
       }
     }
     
@@ -54,7 +54,7 @@ class Bar extends Node {
   nameAndTypeCheck(): void {
     if (this.rhythmName){
       if(!SymbolTable.rhythms.has(this.rhythmName)){
-        ErrorUtil.varUndefind(this.rhythmName);
+        ErrorUtil.varUndefined(this.rhythmName);
       }
     }
   }

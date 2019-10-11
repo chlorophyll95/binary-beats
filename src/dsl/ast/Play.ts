@@ -22,7 +22,7 @@ class Play extends Node {
           ret.push(b);
         }
       } else {
-        ErrorUtil.varUndefind(beat);
+        ErrorUtil.varUndefined(beat);
       }
     }
     

@@ -52,6 +52,8 @@ export default class tests {
       KCK: HAT1 
     Play A B`;
 
+
+    // should fail!
     public static case1: string = `Set tempo to 85 bpm 
     Rhythms:
       Define HAT1 as {xxxx-x-xxxxxxxxx}
@@ -63,18 +65,19 @@ export default class tests {
       OHT: ({----------------})*4 
     Play INTRO VERSE`;
     
-    public static case2: string = `Set tempo to 85 bpm 
-    Rhythms:
-      Define HAT1 as {xxxx-x-xxxxxxxxx}
-      Define INTROHAT as {xxxxxxxxxxxxxxxx}
-    Create beat INTRO with layers: 
-      HAT: (INTROHAT)*4 
-    Create beat VERSE with layers: 
-      HAT: (HAT1)*4 
-      SNR: (|-x-x|)*4 
-      KCK: ({x-----xx--x-----})*2 ({x-----xx--x-x--x})*2 
-      OHT: ({----------------})*4 
-    Play INTRO VERSE`;
+    public static case2: string = 
+    `Set tempo to 85 bpm 
+Rhythms:
+  Define HAT1 as {xxxx-x-xxxxxxxxx}
+  Define INTROHAT as {xxxxxxxxxxxxxxxx}
+Create beat INTRO with layers: 
+  HAT: (INTROHAT)*4 
+Create beat VERSE with layers: 
+  HAT: (HAT1)*4 
+  SNR: (|-x-x|)*4 
+  KCK: ({x-----xx--x-----})*2 ({x-----xx--x-x--x})*2 
+  OHT: ({----------------})*4 
+Play INTRO VERSE`;
 
     public static case3: string = `Set tempo to 85 bpm 
     Create beat VERSE with layers: 
