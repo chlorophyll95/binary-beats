@@ -18,6 +18,8 @@ import Eighths from './dsl/ast/Eighths';
 import Sixteenths from './dsl/ast/Sixteenths';
 import Rhythm from './dsl/ast/Rhythm';
 import Orb from './ui/Orb';
+import { string } from 'prop-types';
+import Layer from './dsl/ast/Layer';
 
 loadSyntaxJs(prism);
 
@@ -101,6 +103,9 @@ class App extends Component<any, State> {
       let program = new BBProgram();
       program.parse();
       console.log("finished parsing");
+      console.log(tokenizer.getLine());
+
+
       // TEST FOR RHYTHM NODE ONLY
       var rhythm: Rhythm;
       if (tokenizer.checkToken('|')) {
