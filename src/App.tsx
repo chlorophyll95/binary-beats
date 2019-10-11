@@ -21,7 +21,7 @@ import Orb from './ui/Orb';
 import { string } from 'prop-types';
 import Layer from './dsl/ast/Layer';
 import SymbolTable from './dsl/libs/SymbolTable';
-
+import tests from './tests';
 loadSyntaxJs(prism);
 
 interface PropType {
@@ -44,21 +44,7 @@ class App extends Component<any, State> {
     super(props);
 
     this.state = {
-      code:
-        `Set tempo to 120 bpm
-        Rhythms:
-          Define HAT1 as {xxxxxxxxxxxxxxxx}
-          Define SNR1 as [--x---x-]
-          Define KCK1 as |x-x-|
-        Create beat A with layers:
-          HAT: HAT1
-          SNR: SNR1
-          KCK: KCK1
-        Create beat B with layers:
-          HAT: KCK1
-          SNR: SNR1
-          KCK: HAT1 
-        Play beat A B`,
+      code: tests.case3,
       logs: [],
       isPlaying: false,
       tempo: 85,

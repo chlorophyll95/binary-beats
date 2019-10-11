@@ -37,7 +37,6 @@ class Bar extends Node {
   }
 
   evaluate(): number[] {
-    console.log("Eval: Bar");
     let rhythm: Rhythm = this.rhythm;
     
     if (!this.rhythm && this.rhythmName) { // it's a rhythmName

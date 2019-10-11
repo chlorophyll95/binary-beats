@@ -35,7 +35,6 @@ class Layer extends Node {
   }
 
   evaluate(): any[] {
-    console.log("Eval: Layers");
     let layerArr = [];
     for (let barOrRepeat of this.barsOrRepeats) {
       layerArr.push(barOrRepeat.evaluate());
