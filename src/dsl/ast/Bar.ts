@@ -10,28 +10,37 @@ class Bar extends Node {
   rhythmName?: string;
   
   parse(): void {
+    // console.log("IN BAR.PARSE");
     let tokenizer = Tokenizer.getTokenizer();
-    console.log(tokenizer);
 
     if (tokenizer.checkToken("|")) {
       this.rhythm = new Quarters();
-      console.log("quarter")
+      // console.log("quarter")
     }
     else if (tokenizer.checkToken("[")) {
       this.rhythm = new Eighths();
-      console.log("eighth")
+      // console.log("eighth")
     }
     else if (tokenizer.checkToken("{")) {
       this.rhythm = new Sixteenths();
-      console.log("sixteenth")
+      // console.log("sixteenth")
     } else {
       this.rhythmName = tokenizer.getNext();
-      console.log("It's a Rhythm variable, not a Rhythm!")
+      // console.log("It's a Rhythm variable, not a Rhythm!")
     }
 
     if (this.rhythm) {
       this.rhythm.parse();
+      // console.log("BACK IN BAR.PARSE")
     }
+
+    if (this.rhythm) {
+      // console.log("parsing the rhythm", this.rhythm);
+    } else {
+      // console.log("the rhythm name is", this.rhythmName)
+    }
+
+    // console.log("LEAVING BAR.PARSE");
   }
   evaluate(): void {
     throw new Error("Method not implemented.");
