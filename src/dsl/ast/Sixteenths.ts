@@ -14,9 +14,7 @@ class Sixteenths extends Rhythm {
     this.tokenizer.getAndCheckNext("}");
   }
 
-  evaluate(): number[][][] {
-    console.log(this.buildArray(0));
-
+  evaluate(): number[] {
     return this.buildArray(0);
   }
 

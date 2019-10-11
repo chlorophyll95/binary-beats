@@ -1,14 +1,39 @@
 import { Node } from "../libs/Node";
+import SymbolTable from "../libs/SymbolTable";
 
 class Play extends Node {
+  playBeats: string[] = [];
+
   parse(): void {
-    throw new Error("Method not implemented.");
+    this.tokenizer.getAndCheckNext("Play");
+    this.tokenizer.getAndCheckNext("beat");
+    while(this.tokenizer.hasNext()){
+      this.playBeats.push(this.tokenizer.getNext());
+    }
   }
-  evaluate(): void {
-    throw new Error("Method not implemented.");
+
+  evaluate(): any[] {
+    let ret: any[] = [];
+    console.log("Eval: Play");
+    for (let beat of this.playBeats) {
+      if (SymbolTable.beats.has(beat)) {
+        let fullBeat =  SymbolTable.beats.get(beat);
+        for (let b of fullBeat) {
+          ret.push(b);
+        }
+      }
+    }
+    
+    return ret;
   }
+  
   nameAndTypeCheck(): void {
-    throw new Error("Method not implemented.");
+    // check if the beat variable is actually in the list
+    for (let beat in this.playBeats) {
+      if (!this.playBeats.includes(beat)) {
+        throw new Error("Beat " + beat + " has not been declared");
+      }
+    }
   }
 }
 

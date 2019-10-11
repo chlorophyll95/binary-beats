@@ -1,4 +1,5 @@
 import { Node } from "../libs/Node";
+
 import Tokenizer from "../libs/Tokenizer";
 import { DrumType } from "./DrumType";
 import Repeat from "./Repeat";
@@ -17,9 +18,7 @@ class Layer extends Node {
 
     tokenizer.getAndCheckNext(":");
 
-    debugger;
-
-    while (!tokenizer.checkToken("NEW_LINE")) {
+    while (!tokenizer.checkAhead(":") && !tokenizer.checkToken("Play") && !tokenizer.checkToken("Create")) {
       if (tokenizer.checkToken("(")) {
         let repeat = new Repeat(this.drumCode);
         repeat.parse();
@@ -36,18 +35,14 @@ class Layer extends Node {
   }
 
   evaluate(): any[] {
+    console.log("Eval: Layers");
     let layerArr = [];
     for (let barOrRepeat of this.barsOrRepeats) {
       layerArr.push(barOrRepeat.evaluate());
     }
 
-    console.log(layerArr.flat(2));
-    debugger;
-
-    return layerArr;
-
+    return layerArr.flat();
   }
-
   nameAndTypeCheck(): void {
     throw new Error("Method not implemented.");
   }

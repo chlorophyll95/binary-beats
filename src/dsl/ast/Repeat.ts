@@ -40,7 +40,6 @@ class Repeat extends Node {
       stanzaArray.push(bar.evaluate());
     }
 
-    debugger;
     for (let repeats = 0; repeats < this.quantity; repeats++) {
       repeatedStanzaArray.push(stanzaArray);
     }

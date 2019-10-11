@@ -38,26 +38,19 @@ abstract class Rhythm extends Node {
     }
   }
 
-  getNote(char: string): Array<number> {
-    return char === 'x' ? [this.drumCode] : [];
+  getNote(char: string): number {
+    return char === 'x' ? this.drumCode : 0;
   }
 
-  buildArray(numRests: number): Array<Array<Array<number>>> {
+  buildArray(numRests: number): Array<number> {
     let beatArr = [];
-
     for (const char of this.pattern.split('')) {
-      beatArr.push([
-        this.getNote(char),
-        []
-      ]);
+      beatArr.push(this.getNote(char));
 
       for (let i = 0; i < numRests; i++) {
-        beatArr.push([
-          [], []
-        ])
+        beatArr.push(0);
       }
     }
-
     return beatArr;
   }
 }

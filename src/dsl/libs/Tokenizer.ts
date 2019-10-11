@@ -34,7 +34,7 @@ export default class Tokenizer {
             ':'
         ];
 
-        this.program = this.program.split('\n').join(` ${Tokens.NEW_LINE} `);
+        this.program = this.program.split('\n').join(``);
 
         for (let token of literals) {
             this.program = this.program.split(token).join(` ${token} `);
@@ -52,6 +52,15 @@ export default class Tokenizer {
         }
 
         return null;
+    }
+
+    public checkAhead(token: string): boolean {
+        let futureTokenIdx = this.currentTokenIdx + 1;
+        if (futureTokenIdx < this.tokens.length) {
+            return this.tokens[futureTokenIdx] === token;
+        }
+
+        return false;
     }
 
     public checkToken(token: string): boolean {
@@ -78,7 +87,7 @@ export default class Tokenizer {
 
         if (token !== s) {
             throw new Error(
-                `Unexpected token ${s} at line: ${this.line} and column: ${this.column}`
+                `Unexpected token ${s} instead of ${token} at line: ${this.line} and column: ${this.column}`
             )
         }
 
@@ -99,5 +108,9 @@ export default class Tokenizer {
 
     public static makeTokenizer(code: string) : void {
         this.theTokenizer = new Tokenizer(code);
+    }
+
+    public skipLine(): void {
+        //this.getAndCheckNext(Tokens.NEW_LINE);
     }
 }

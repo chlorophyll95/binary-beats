@@ -38,15 +38,16 @@ class RhythmDef extends Node {
   // saves rhythm to rhythm name
   // TODO: test this after rhythm is done
   evaluate(): void {
-    SymbolTable.rhythms[this.rhythmName] = this.rhythm;
+    SymbolTable.rhythms.set(this.rhythmName, this.rhythm);
+    //SymbolTable.rhythms[this.rhythmName] = this.rhythm;
   }
 
   nameAndTypeCheck(): void {
     this.validateName(this.rhythmName);
-    if (SymbolTable.rhythms.hasOwnProperty(this.rhythmName)) {
+    if (SymbolTable.rhythms.has(this.rhythmName)) {
       throw new Error(`Rhythm with name ${this.rhythmName} has already been defined.`);
     }
-    SymbolTable.types[this.rhythmName] = BBType.Rhythm;
+    SymbolTable.types.set(this.rhythmName, BBType.Rhythm);
   }
 }
 
