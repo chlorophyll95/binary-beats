@@ -41,9 +41,7 @@ class Layer extends Node {
       layerArr.push(barOrRepeat.evaluate());
     }
 
-    //debugger;
     return layerArr.flat();
-
   }
   nameAndTypeCheck(): void {
     throw new Error("Method not implemented.");

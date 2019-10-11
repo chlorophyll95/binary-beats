@@ -107,6 +107,7 @@ class App extends Component<any, State> {
 
       let program = new BBProgram();
       program.parse();
+
       // at the end
       this.pushLog('Beat ready 💅');
       this.midiSounds.startPlayLoop(program.evaluate(), SymbolTable.tempo, 1 / 16);
