@@ -11,7 +11,7 @@ class Bar extends Node {
   
   parse(): void {
     let tokenizer = Tokenizer.getTokenizer();
-
+    console.log("came to parse bar");
     if (tokenizer.checkToken("|")) {
       this.rhythm = new Quarters();
     }
@@ -21,6 +21,7 @@ class Bar extends Node {
     else if (tokenizer.checkToken("{")) {
       this.rhythm = new Sixteenths();
     } else {
+      console.log("cam eto get next");
       this.rhythmName = tokenizer.getNext();
     }
 

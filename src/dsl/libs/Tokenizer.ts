@@ -54,6 +54,15 @@ export default class Tokenizer {
         return null;
     }
 
+    public checkAhead(token: string): boolean {
+        let futureTokenIdx = this.currentTokenIdx + 1;
+        if (futureTokenIdx < this.tokens.length) {
+            return this.tokens[futureTokenIdx] === token;
+        }
+
+        return false;
+    }
+
     public checkToken(token: string): boolean {
         let s = this.checkNext();
 

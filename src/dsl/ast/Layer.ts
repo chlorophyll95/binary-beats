@@ -1,33 +1,5 @@
 import { Node } from "../libs/Node";
-<<<<<<< HEAD
-import Quarters from "./Quarters";
-import Eighths from "./Eighths";
-import Sixteenths from "./Sixteenths";
 
-class Layer extends Node {
-  vars: string[] = [];
-    
-  parse(): void {
-    let layerName: string = this.tokenizer.getNext();
-    let measure: Node;
-
-    this.tokenizer.getAndCheckNext(":");
-    if (this.tokenizer.checkToken("|")) {
-      measure = new Quarters();
-      console.log("quarter")
-    }
-    else if (this.tokenizer.checkToken("[")) {
-      measure = new Eighths();
-      console.log("eighth")
-    }
-    else if (this.tokenizer.checkToken("{")) {
-      measure = new Sixteenths();
-      console.log("sixteenth")
-    }
-    else {
-      this.vars.push(this.tokenizer.getNext());
-    }
-=======
 import Tokenizer from "../libs/Tokenizer";
 import { DrumType } from "./DrumType";
 import Repeat from "./Repeat";
@@ -41,10 +13,12 @@ class Layer extends Node {
     let tokenizer = Tokenizer.getTokenizer();
 
     this.drumType = tokenizer.getNext() as DrumType;
+    console.log("Drum Type top:", this.drumType);
 
     tokenizer.getAndCheckNext(":");
 
-    while (!tokenizer.checkToken("NEW_LINE")) {
+    while (!tokenizer.checkAhead(":") && !tokenizer.checkToken("Play") && !tokenizer.checkToken("Create")) {
+      console.log("came into while loop");
       if (tokenizer.checkToken("(")) {
         let repeat = new Repeat();
         repeat.parse();
@@ -58,7 +32,6 @@ class Layer extends Node {
     console.log("Drum Type:", this.drumType);
     console.log("Bars/Repeats:", this.bars);
     console.log("LEAVING LAYER.PARSE");
->>>>>>> daf350e67c99e5ac469f1e01822eabb3ddc58599
   }
 
   evaluate(): void {
