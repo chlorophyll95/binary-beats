@@ -51,6 +51,7 @@ class Bar extends Node {
       }
     }
 
+    console.log("Retrieved Rhythm:", retrievedRhythm);
     return retrievedRhythm;
   }
 

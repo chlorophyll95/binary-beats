@@ -17,8 +17,6 @@ class Layer extends Node {
 
     tokenizer.getAndCheckNext(":");
 
-    debugger;
-
     while (!tokenizer.checkToken("NEW_LINE")) {
       if (tokenizer.checkToken("(")) {
         let repeat = new Repeat(this.drumCode);
@@ -41,10 +39,9 @@ class Layer extends Node {
       layerArr.push(barOrRepeat.evaluate());
     }
 
-    console.log(layerArr.flat(2));
-    debugger;
+    console.log(layerArr.flat());
 
-    return layerArr;
+    return layerArr.flat();
 
   }
 
