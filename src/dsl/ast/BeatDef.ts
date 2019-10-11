@@ -3,7 +3,6 @@ import Tokenizer from "../libs/Tokenizer";
 import Layer from "./Layer";
 import SymbolTable from "../libs/SymbolTable";
 import { BBType } from "../libs/BBTypes";
-import Tokens from "../libs/Tokens";
 
 class BeatDef extends Node {
   beatName: string;
@@ -23,7 +22,6 @@ class BeatDef extends Node {
     // assume (for now) that beatdef must be followed by another beatdef or play
     while (!tokenizer.checkToken("Create") && !tokenizer.checkToken("Play")) {
       let layer = new Layer();
-      console.log('found new layer');
       layer.parse();
       this.layers.push(layer);
       // each layer is separated by new line
@@ -33,20 +31,33 @@ class BeatDef extends Node {
 
   evaluate(): void {
     console.log("Eval: BeatDef");
-    let evalLayers : any[][] = [];
-    for (let i: number = 0; i < 16; i++){
-      let subset = [];
-      for(let j: number = 0; j < this.layers.length; j++){
-        let layer = this.layers[j].evaluate();
-        let singleBeat = layer[i];
-        if (singleBeat !== 0){
-          subset.push(singleBeat);
-        }
-      }
-      evalLayers.push([subset, []]);
+
+    // evaluate every layer first to determine the longest layer
+    let evaluatedLayers: any[] = [];
+    let maxLength = 0;
+    for (let layer of this.layers){
+      let layerBeats: any[] = layer.evaluate();
+      evaluatedLayers.push(layerBeats);
+      maxLength = Math.max(layerBeats.length, maxLength);
     }
 
-    SymbolTable.beats.set(this.beatName, evalLayers);
+    // merge the layers together 
+    let mergedLayers : any[][] = [];
+    for (let i: number = 0; i < maxLength; i++){
+      let subset = [];
+      for(let j: number = 0; j < evaluatedLayers.length; j++){
+        let layer: any[] = evaluatedLayers[j];
+        if(layer.length > i){
+          let singleBeat = layer[i];
+          if (singleBeat !== 0){
+            subset.push(singleBeat);
+          }
+        }
+      }
+      mergedLayers.push([subset, []]);
+    }
+
+    SymbolTable.beats.set(this.beatName, mergedLayers);
   }
 
   nameAndTypeCheck(): void {

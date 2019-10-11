@@ -1,6 +1,5 @@
 import Rhythm from "../ast/Rhythm";
 import { BBType } from "./BBTypes";
-import Layer from "../ast/Layer";
 
 export default class SymbolTable {
 

@@ -1,12 +1,7 @@
-import Tokenizer from "../libs/Tokenizer";
-import SymbolTable from "../libs/SymbolTable";
 import { Node } from "../libs/Node";
 import Tempo from "./Tempo";
-import RhythmDef from "./RhythmDef";
 import BeatDef from "./BeatDef";
 import Play from "./Play";
-import { reservedWords } from "../libs/ReservedWords";
-import Tokens from "../libs/Tokens";
 import RhythmBlock from "./RhythmBlock";
 
 export class BBProgram extends Node {
@@ -14,18 +9,18 @@ export class BBProgram extends Node {
 
     public parse(): void {
         if(this.tokenizer.checkTokenStrict("Set")){
-            this.startParse("Set", new Tempo);
+            this.startParse("Set", new Tempo());
         }
         if(this.tokenizer.checkToken("Rhythms")){
-            this.startParse("Rhythms", new RhythmBlock);
+            this.startParse("Rhythms", new RhythmBlock());
         }
         if(this.tokenizer.checkTokenStrict("Create")){
             while(this.tokenizer.checkToken("Create")){
-                this.startParse("Create", new BeatDef);
+                this.startParse("Create", new BeatDef());
             }
         }
         if(this.tokenizer.checkTokenStrict("Play")){
-            this.startParse("Play", new Play);
+            this.startParse("Play", new Play());
         }  
     }
 

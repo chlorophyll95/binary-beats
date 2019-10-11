@@ -7,19 +7,11 @@ import MIDISounds from 'midi-sounds-react';
 
 import Tokenizer from './dsl/libs/Tokenizer';
 import { BBProgram } from './dsl/ast/BBProgram';
-import DrumCodeMap from './dsl/libs/DrumCodeMap';
 import { loadSyntaxJs } from './prism-binary-beats';
 
 import './App.css';
 import './syntax.css';
-
-import Quarters from './dsl/ast/Quarters';
-import Eighths from './dsl/ast/Eighths';
-import Sixteenths from './dsl/ast/Sixteenths';
-import Rhythm from './dsl/ast/Rhythm';
 import Orb from './ui/Orb';
-import { string } from 'prop-types';
-import Layer from './dsl/ast/Layer';
 import SymbolTable from './dsl/libs/SymbolTable';
 import tests from './tests';
 loadSyntaxJs(prism);
@@ -44,7 +36,7 @@ class App extends Component<any, State> {
     super(props);
 
     this.state = {
-      code: tests.plainJane,
+      code: tests.case2,
       logs: [],
       isPlaying: false,
       tempo: 85,
@@ -88,7 +80,6 @@ class App extends Component<any, State> {
     try {
       console.log("starting");
       Tokenizer.makeTokenizer(this.state.code);
-      let tokenizer = Tokenizer.getTokenizer();
       this.pushLog('Tokenizing complete ✅');
 
       let program = new BBProgram();
