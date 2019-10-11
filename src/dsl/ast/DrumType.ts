@@ -5,6 +5,7 @@ export type DrumType =
   'TM2' |
   'TM3' |
   'HAT' |
+  'OHT' |
   'CSH' |
   'RDE' |
   'CLP';
