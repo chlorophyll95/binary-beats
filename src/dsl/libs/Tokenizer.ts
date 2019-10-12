@@ -34,7 +34,7 @@ export default class Tokenizer {
             ':'
         ];
 
-        this.program = this.program.split('\n').join(``);
+        this.program = this.program.split('\n').join(` `);
 
         for (let token of literals) {
             this.program = this.program.split(token).join(` ${token} `);
