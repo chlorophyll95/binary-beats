@@ -34,7 +34,7 @@ export default class Tokenizer {
             ':'
         ];
 
-        this.program = this.program.split('\n').join(``);
+        this.program = this.program.split('\n').join(` ${Tokens.NEW_LINE} `);
 
         for (let token of literals) {
             this.program = this.program.split(token).join(` ${token} `);
@@ -47,15 +47,26 @@ export default class Tokenizer {
     }
 
     public checkNext(): string | null {
+        // ignore new lines
+        while (this.tokens[this.currentTokenIdx] === Tokens.NEW_LINE) {
+            this.currentTokenIdx += 1;
+            this.line += 1;
+        }
         if (this.currentTokenIdx < this.tokens.length) {
             return this.tokens[this.currentTokenIdx];
         }
-
         return null;
     }
 
     public checkAhead(token: string): boolean {
+        while (this.tokens[this.currentTokenIdx] === Tokens.NEW_LINE) {
+            this.currentTokenIdx += 1;
+            this.line += 1;
+        }
         let futureTokenIdx = this.currentTokenIdx + 1;
+        while (this.tokens[futureTokenIdx] === Tokens.NEW_LINE) {
+            futureTokenIdx += 1;
+        }
         if (futureTokenIdx < this.tokens.length) {
             return this.tokens[futureTokenIdx] === token;
         }
@@ -65,7 +76,6 @@ export default class Tokenizer {
 
     public checkToken(token: string): boolean {
         let s = this.checkNext();
-
         return token === s;
     }
 
@@ -74,9 +84,6 @@ export default class Tokenizer {
             let token = this.tokens[this.currentTokenIdx];
             this.currentTokenIdx += 1;
             this.column += token.length;
-            if (token === Tokens.NEW_LINE) {
-                this.line += 1;
-            }
             return token;
         }
         return "";
