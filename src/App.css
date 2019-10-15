@@ -55,12 +55,19 @@ body {
 
 .logo {
   padding-left: 10px;
+  color: #fdfdfd;
+  text-shadow: 0 0 2px #001716, 0 0 3px #03edf975, 0 0 5px #03edf975, 0 0 8px #03edf975;
 }
 
 span .emoji {
   padding-right: 6px;
   display: inline-flex;
 }
+
+.logo span.emoji {
+  padding: 0;
+}
+
 
 .tabs {
   margin-left: auto;
@@ -77,10 +84,18 @@ span .emoji {
   align-items: center;
   padding: 12px;
   box-sizing: border-box;
+  width: 150px;
+  justify-content: center;
 }
 
 .tab.active {
-  border-bottom: solid #6196cc 2px;
+  border-bottom: solid #03edf975 2px;
+  color: #fdfdfd;
+  text-shadow: 0 0 2px #001716, 0 0 3px #03edf975, 0 0 5px #03edf975, 0 0 8px #03edf975;
+}
+
+.tab.active .emoji {
+  text-shadow: none;
 }
 
 .tab:hover {
