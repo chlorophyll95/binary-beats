@@ -2,6 +2,7 @@
 
 html {
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 *, *:before, *:after {
@@ -25,9 +26,66 @@ body {
 
 .container {
   display: flex;
-  height: 100%;
+  height: calc(100% - 50px);
   width: 100%;
   position: relative;
+  margin-top: 50px;
+}
+
+.tool-bar {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  top: 0;
+  height: 50px;
+  width: 100%;
+  z-index: 1;
+  background-color: #272d30;
+  box-shadow: 0 4px 2px -2px #181c1d;
+}
+
+.tool-bar span {
+  color: white;
+  font-size: 16px;
+}
+
+.logo-container {
+  flex: 2;
+}
+
+.logo {
+  padding-left: 10px;
+}
+
+span .emoji {
+  padding: 0;
+  display: inline-flex;
+}
+
+.tabs {
+  margin-left: auto;
+  flex: 1;
+  border-left: solid 1px #181c1d;
+  height: 100%;
+  display: flex;
+}
+
+.tab {
+  padding-left: 12px;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.tab.active {
+  border-bottom: solid #6196cc 2px;
+}
+
+.tab:hover {
+  background-color: #3c4548;
+  cursor: pointer;
 }
 
 .editor-container {
@@ -91,6 +149,15 @@ body {
   display: flex;
   justify-content: center;
   flex: 1;
+}
+
+.docs {
+  flex: 1;
+  height: 100%;
+  border-left: solid 1px #dadce0;
+  background: #bbbbbb;
+  display: flex;
+  flex-direction: column;
 }
 
 .output {

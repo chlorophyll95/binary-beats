@@ -4,6 +4,7 @@ import * as prism from 'prismjs';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import MIDISounds from 'midi-sounds-react';
+import ReactMarkdown from 'react-markdown';
 
 import Tokenizer from './dsl/libs/Tokenizer';
 import { BBProgram } from './dsl/ast/BBProgram';
@@ -28,6 +29,7 @@ interface State {
   isPlaying: boolean;
   logs: string[];
   tempo: number;
+  activeTab: number;
 }
 
 const ERROR_STR = "ERROR: ";
@@ -43,6 +45,7 @@ class App extends Component<any, State> {
       logs: [],
       isPlaying: false,
       tempo: 85,
+      activeTab: 0,
     };
 
     this.pushLog = this.pushLog.bind(this);
@@ -52,6 +55,7 @@ class App extends Component<any, State> {
     this.onStop = this.onStop.bind(this);
     this.reset = this.reset.bind(this);
     this.clearSymbolTable = this.clearSymbolTable.bind(this);
+    this.onTabSwitch = this.onTabSwitch.bind(this);
   }
 
   pushLog(log: string) {
@@ -77,8 +81,8 @@ class App extends Component<any, State> {
   }
 
   clearSymbolTable() {
-    SymbolTable.types = new Map<string, BBType>(); 
-    SymbolTable.rhythms = new Map<string, Rhythm>(); 
+    SymbolTable.types = new Map<string, BBType>();
+    SymbolTable.rhythms = new Map<string, Rhythm>();
     SymbolTable.beats = new Map<string, any[]>();
   }
 
@@ -128,9 +132,39 @@ class App extends Component<any, State> {
     this.clearLog();
   }
 
+  onTabSwitch(clickedTab: number) {
+    this.setState((prevState) => ({
+      ...prevState,
+      activeTab: clickedTab,
+    }));
+  }
+
   render() {
+    const { activeTab } = this.state;
+
     return (
       <div className="container">
+        <div className="tool-bar">
+          <div className="logo-container">
+            <span className="logo">
+              <span className="emoji">🅱</span>️inary <span className="emoji">🅱</span>️eats
+            </span>
+          </div>
+          <div className="tabs">
+            <span
+              className={`tab ${activeTab === 0 ? 'active' : ''}`}
+              onClick={() => this.onTabSwitch(0)}
+            >
+              <span className="emoji">💻</span>Output
+            </span>
+            <span
+              className={`tab ${activeTab === 1 ? 'active' : ''}`}
+              onClick={() => this.onTabSwitch(1)}
+            >
+              <span className="emoji">📄</span>Docs
+            </span>
+          </div>
+        </div>
         <div className="editor-container">
           <Editor
             value={this.state.code}
@@ -143,27 +177,38 @@ class App extends Component<any, State> {
             className="container__editor"
           />
           <span
-            className={this.state.code.trim().length == 0? "button disabled":"button"}
+            className={this.state.code.trim().length == 0 ? "button disabled" : "button"}
             onClick={this.state.isPlaying ? this.onStop : this.onCompile}
           >
             {this.state.isPlaying ? 'Stop' : 'Play'}
           </span>
         </div>
-        <div className="output">
-          <div className="terminal">
-          {
-            this.state.logs.map((log: string) => (
-              <span key={log}
-                className={log.substring(0, 7) === ERROR_STR ? "error_msg" : ""}
-              >
-                {log}</span>
-            ))
-          }
-          </div>
-          <div className="visualizer">
-            {this.state.isPlaying && <Orb tempo={this.state.tempo} />}
-          </div>
-        </div>
+        {
+          activeTab === 0 && (
+            <div className="output">
+              <div className="terminal">
+                {
+                  this.state.logs.map((log: string) => (
+                    <span key={log}
+                      className={log.substring(0, 7) === ERROR_STR ? "error_msg" : ""}
+                    >
+                      {log}</span>
+                  ))
+                }
+              </div>
+              <div className="visualizer">
+                {this.state.isPlaying && <Orb tempo={this.state.tempo} />}
+              </div>
+            </div>
+          )
+        }
+        {
+          activeTab === 1 && (
+            <div className="docs">
+              <ReactMarkdown source={'# This is a header\n\nAnd this is a paragraph'} />
+            </div>
+          )
+        }
         <MIDISounds
           ref={(ref: any) => (this.midiSounds = ref)}
           appElementName="root"
