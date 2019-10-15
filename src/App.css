@@ -41,7 +41,7 @@ body {
   width: 100%;
   z-index: 1;
   background-color: #272d30;
-  box-shadow: 0 4px 2px -2px #181c1d;
+  box-shadow: 3px 1px 5px #181c1d;
 }
 
 .tool-bar span {
@@ -58,7 +58,7 @@ body {
 }
 
 span .emoji {
-  padding: 0;
+  padding-right: 6px;
   display: inline-flex;
 }
 
