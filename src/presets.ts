@@ -11,7 +11,7 @@ Create beat VERSE with layers:
   HAT: (HATS)*7
   PED: (HATS)*7
   KCK: (|x-x-| {x-------x------x})*3 |x-x-|
-  STK: ({xxxxxxxxxxxxxxx-})*7
+  MHC: ({xxxxxxxxxxxxxxx-})*7
 Play VERSE INTRO`;
 
 export const nightmare = 
