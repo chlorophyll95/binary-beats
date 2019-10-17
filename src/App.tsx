@@ -5,7 +5,7 @@ import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import MIDISounds from 'midi-sounds-react';
 import ReactMarkdown from 'react-markdown';
-import { MdLoop } from "react-icons/md";
+import { MdLoop, MdCode } from "react-icons/md";
 
 import Tokenizer from './dsl/libs/Tokenizer';
 import { BBProgram } from './dsl/ast/BBProgram';
@@ -284,7 +284,7 @@ class App extends Component<any, State> {
               className={`side-tab ${activeSideTab === 0 ? 'active' : ''}`}
               onClick={() => this.onTabSwitch(0, 'side')}
             >
-              Work <br /> Space
+              <MdCode />
             </span>
             <span className="tab-separator">PRESETS</span>
             <span
@@ -355,7 +355,7 @@ class App extends Component<any, State> {
                 {this.state.isPlaying && <Visualizer tempo={this.state.tempo} shape={VIS_SHAPES[this.state.visShape % 3]} />}
               </div>
               <div className="switch-container">
-              {this.state.isPlaying && 
+              {this.state.isPlaying &&
                 <span className="button-switch"
                 onClick={this.onVisSwitch}>
                 <MdLoop/>

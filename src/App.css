@@ -120,13 +120,10 @@ span .emoji {
   font-size: 32px;
 }
 
-.side-bar .side-tab:first-of-type {
-  font-size: 16px;
-}
-
 .side-tab.active {
   border-right: solid #03edf975 2px;
   color: #fdfdfd;
+  background: #202628;
   text-shadow: 0 0 2px #001716, 0 0 3px #03edf975, 0 0 5px #03edf975, 0 0 8px #03edf975;
 }
 
@@ -134,8 +131,12 @@ span .emoji {
   font-size: 12px;
   justify-content: center;
   display: flex;
-  background: #212124;
+  background: #1a1a1d;
   color: grey;
+}
+
+.side-bar span.active svg {
+  filter: drop-shadow( 0 0 4px #03edf9);
 }
 
 .left-container {
