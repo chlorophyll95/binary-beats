@@ -90,6 +90,7 @@ span .emoji {
 .tab.active {
   border-bottom: solid #03edf975 2px;
   color: #fdfdfd;
+  background: #202628;
   text-shadow: 0 0 2px #001716, 0 0 3px #03edf975, 0 0 5px #03edf975, 0 0 8px #03edf975;
 }
 
@@ -175,6 +176,34 @@ span .emoji {
   right: 24px;
 }
 
+.switch-container{
+  padding-bottom: 20px;
+  justify-content: center;
+  display: flex;
+}
+
+.button-switch {
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  align-items: center;
+  border-radius: 50%;
+  text-decoration: none;
+  background-color: rgba(255,255,255,0.1);
+  z-index: 1;
+  color: #fff;
+  font-size: 20pt;
+}
+
+.button-switch:hover{
+  background-color: rgba(255,255,255,0.2);
+}
+
+.button-switch:active{
+  background-color: rgba(255,255,255,0.25);
+}
+
 .error_msg {
   color: firebrick;
   font-weight: 600;
@@ -187,7 +216,7 @@ span .emoji {
 }
 
 .visualizer {
-  padding: 50px;
+  padding: 20px;
   display: flex;
   justify-content: center;
   flex: 1;

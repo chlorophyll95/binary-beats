@@ -5,6 +5,7 @@ import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import MIDISounds from 'midi-sounds-react';
 import ReactMarkdown from 'react-markdown';
+import { MdLoop } from "react-icons/md";
 
 import Tokenizer from './dsl/libs/Tokenizer';
 import { BBProgram } from './dsl/ast/BBProgram';
@@ -13,7 +14,7 @@ import { plainJane, nightmare, drake } from './presets';
 
 import './App.css';
 import './syntax.css';
-import Orb from './ui/Orb';
+import Visualizer from './ui/Visualizer';
 import SymbolTable from './dsl/libs/SymbolTable';
 import { BBType } from './dsl/libs/BBTypes';
 import Rhythm from './dsl/ast/Rhythm';
@@ -37,11 +38,13 @@ interface State {
   docs: string;
   canSave: boolean;
   presets: any;
+  visShape: number;
 }
 
 type TabType = 'top' | 'side';
 
 const ERROR_STR = "ERROR: ";
+const VIS_SHAPES = ["orb", "ripple", "bars"];
 
 class App extends Component<any, State> {
   public midiSounds: any;
@@ -63,6 +66,7 @@ class App extends Component<any, State> {
         2: nightmare,
         3: drake,
       },
+      visShape: 0,
     };
 
     this.pushLog = this.pushLog.bind(this);
@@ -77,6 +81,7 @@ class App extends Component<any, State> {
     this.onCodeChange = this.onCodeChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.getCurrentCode = this.getCurrentCode.bind(this);
+    this.onVisSwitch = this.onVisSwitch.bind(this);
   }
 
   componentDidMount() {
@@ -240,6 +245,13 @@ class App extends Component<any, State> {
     }
   }
 
+  onVisSwitch() {
+    this.setState((prevState) => ({
+      ...prevState,
+      visShape: this.state.visShape + 1,
+    }));
+  }
+
   render() {
     const { activeTab, docs, canSave, activeSideTab } = this.state;
 
@@ -340,7 +352,14 @@ class App extends Component<any, State> {
                 }
               </div>
               <div className="visualizer">
-                {this.state.isPlaying && <Orb tempo={this.state.tempo} />}
+                {this.state.isPlaying && <Visualizer tempo={this.state.tempo} shape={VIS_SHAPES[this.state.visShape % 3]} />}
+              </div>
+              <div className="switch-container">
+              {this.state.isPlaying && 
+                <span className="button-switch"
+                onClick={this.onVisSwitch}>
+                <MdLoop/>
+                </span>}
               </div>
             </div>
           )

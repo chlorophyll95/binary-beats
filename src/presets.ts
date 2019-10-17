@@ -8,10 +8,9 @@ Create beat INTRO with layers:
 Create beat VERSE with layers: 
   SNR: (|-x-x|)*7
   OHT: (REST {---------------x})*3
-  HAT: (HATS)*7
   PED: (HATS)*7
   KCK: (|x-x-| {x-------x------x})*3 |x-x-|
-  MHC: ({xxxxxxxxxxxxxxx-})*7
+  HAT: ({xxxxxxxxxxxxxxx-})*7
 Play VERSE INTRO`;
 
 export const nightmare = 
