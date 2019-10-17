@@ -5,16 +5,10 @@ interface PropType {
     tempo: number;
 }
 
-export default class Orb extends Component<PropType, {}> {
+export default class Bars extends Component<PropType, {}> {
     render() {
         let tempo = this.props.tempo;
         let time = 60/tempo;
-        let pulse = {
-            animation: 'pulse ' + time + 's ease-in-out infinite'
-        }
-        let ripple = {
-            animation: 'ripple ' + time + 's infinite'
-        }
         let delay1 = time / 4;
         let delay2 = 2*delay1;
         let delay3 = 3*delay1; 
@@ -33,7 +27,10 @@ export default class Orb extends Component<PropType, {}> {
         return (
         <div className="keyframes">
             <div className="container">
-              <div className="orb" style={pulse}></div>
+              <div className="bar" style={bar1}></div>
+              <div className="bar" style={bar2}></div>
+              <div className="bar" style={bar3}></div>
+              <div className="bar" style={bar4}></div>
             </div>
           </div>
         );
