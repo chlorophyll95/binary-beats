@@ -126,26 +126,12 @@ span .emoji {
   height: 400% !important;
 }
 
-.button {
-  padding: 8px;
-  border-radius: 6px;
-  text-decoration: none;
-  background-color: #3f51b5;
-  z-index: 1;
-  color: #fff;
+.buttons-bar {
+  display: flex;
   position: absolute;
-  top: 24px;
+  z-index: 1;
+  top: 10px;
   right: 24px;
-}
-
-.button.disabled {
-  background-color: grey;
-  pointer-events: none;
-}
-
-.button:hover {
-  background: linear-gradient(45deg, #e42b66, #e2433f);
-  cursor: default;
 }
 
 .error_msg {

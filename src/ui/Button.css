@@ -1,0 +1,35 @@
+.button {
+  padding: 8px;
+  border-radius: 6px;
+  text-decoration: none;
+  background-color: #3f51b5;
+  color: #fff;
+}
+
+.button:hover {
+  cursor: default;
+}
+
+.button.disabled {
+  pointer-events: none;
+}
+
+.button.disabled:hover {
+  cursor: not-allowed;
+}
+
+.button.play.disabled {
+  background-color: grey;
+}
+
+.button.play:hover {
+  background: linear-gradient(45deg, #e42b66, #e2433f);
+}
+
+.button.save.disabled {
+  background: linear-gradient(45deg, mediumseagreen, mediumseagreen);
+}
+
+.button.save:hover {
+  background: mediumseagreen;
+}

@@ -9,15 +9,18 @@ import ReactMarkdown from 'react-markdown';
 import Tokenizer from './dsl/libs/Tokenizer';
 import { BBProgram } from './dsl/ast/BBProgram';
 import { loadSyntaxJs } from './prism-binary-beats';
+import { plainJane } from './presets';
 
 import './App.css';
 import './syntax.css';
 import Orb from './ui/Orb';
 import SymbolTable from './dsl/libs/SymbolTable';
-import tests from './tests';
 import { BBType } from './dsl/libs/BBTypes';
 import Rhythm from './dsl/ast/Rhythm';
 import DrumCodeMap from './dsl/libs/DrumCodeMap';
+import Button from './ui/Button';
+import LocalStorageService from './services/LocalStorageService';
+
 loadSyntaxJs(prism);
 
 interface PropType {
@@ -31,6 +34,7 @@ interface State {
   tempo: number;
   activeTab: number;
   docs: string;
+  canSave: boolean;
 }
 
 const ERROR_STR = "ERROR: ";
@@ -42,12 +46,13 @@ class App extends Component<any, State> {
     super(props);
 
     this.state = {
-      code: tests.case2,
+      code: plainJane,
       logs: [],
       isPlaying: false,
       tempo: 85,
       activeTab: 0,
       docs: null,
+      canSave: null,
     };
 
     this.pushLog = this.pushLog.bind(this);
@@ -58,6 +63,9 @@ class App extends Component<any, State> {
     this.reset = this.reset.bind(this);
     this.clearSymbolTable = this.clearSymbolTable.bind(this);
     this.onTabSwitch = this.onTabSwitch.bind(this);
+    this.onSave = this.onSave.bind(this);
+    this.onCodeChange = this.onCodeChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   componentDidMount() {
@@ -75,6 +83,29 @@ class App extends Component<any, State> {
       .catch((error) => {
         console.log('error fetching docs: ', error);
       })
+
+    if (LocalStorageService.hasCode()) {
+      this.setState((prevState) => ({
+        ...prevState,
+        code: LocalStorageService.loadCode(),
+      }));
+    }
+
+    document.addEventListener('keydown', this.handleKeyDown)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown(event: any) {
+    // apple cmd is metaKey
+    if (event.metaKey || event.ctrlKey) {
+      if (event.keyCode === 83) {
+        event.preventDefault();
+        this.onSave();
+      }
+    }
   }
 
   pushLog(log: string) {
@@ -112,8 +143,23 @@ class App extends Component<any, State> {
     }));
   }
 
+  onSave() {
+    LocalStorageService.saveCode(this.state.code.trim());
+
+    this.setState((prevState) => ({
+      ...prevState,
+      code: this.state.code.trim(),
+      canSave: false
+    }));
+
+    setTimeout(() => {
+      this.setState({
+        canSave: null,
+      })
+    }, 1000);
+  }
+
   onCompile() {
-    // do the stuff here
     this.reset();
     this.pushLog('Tokenizing code...');
     try {
@@ -158,8 +204,15 @@ class App extends Component<any, State> {
     }));
   }
 
+  onCodeChange(code: string) {
+    this.setState({
+      code,
+      canSave: true,
+    });
+  }
+
   render() {
-    const { activeTab, docs } = this.state;
+    const { activeTab, docs, canSave } = this.state;
 
     return (
       <div className="container">
@@ -187,7 +240,7 @@ class App extends Component<any, State> {
         <div className="editor-container">
           <Editor
             value={this.state.code}
-            onValueChange={code => this.setState({ code })}
+            onValueChange={code => this.onCodeChange(code)}
             highlight={code => prism.highlight(code, prism.languages.binaryBeats, 'javascript')}
             padding={10}
             style={{
@@ -195,12 +248,25 @@ class App extends Component<any, State> {
             }}
             className="container__editor"
           />
-          <span
-            className={this.state.code.trim().length == 0 ? "button disabled" : "button"}
-            onClick={this.state.isPlaying ? this.onStop : this.onCompile}
-          >
-            {this.state.isPlaying ? 'Stop' : 'Play'}
-          </span>
+          <div className="buttons-bar">
+            {
+              canSave !== null && (
+                <Button
+                  disabled={!canSave}
+                  type="save"
+                  onClick={this.onSave}
+                  text={canSave === false ? 'Saved!' : 'Save'}
+                  style={{ marginRight: '12px' }}
+                />
+              )
+            }
+            <Button
+              type="play"
+              disabled={this.state.code.trim().length == 0}
+              onClick={this.state.isPlaying ? this.onStop : this.onCompile}
+              text={this.state.isPlaying ? 'Stop' : 'Play'}
+            />
+          </div>
         </div>
         {
           activeTab === 0 && (
