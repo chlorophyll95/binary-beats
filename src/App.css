@@ -44,7 +44,7 @@ body {
   box-shadow: 3px 1px 5px #181c1d;
 }
 
-.tool-bar span {
+.tool-bar span, .side-bar span {
   color: white;
   font-size: 16px;
 }
@@ -67,7 +67,6 @@ span .emoji {
 .logo span.emoji {
   padding: 0;
 }
-
 
 .tabs {
   margin-left: auto;
@@ -98,13 +97,55 @@ span .emoji {
   text-shadow: none;
 }
 
-.tab:hover {
+.tab:hover, .side-tab:hover {
   background-color: #3c4548;
   cursor: pointer;
 }
 
-.editor-container {
+.side-bar {
+  height: 100%;
+  background-color: #272d30;
+  box-shadow: 3px 1px 5px #181c1d;
+  border-right: solid 1px #181c1d;
+}
+
+.side-bar .side-tab {
+  height: 75px;
+  width: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 32px;
+}
+
+.side-bar .side-tab:first-of-type {
+  font-size: 16px;
+}
+
+.side-tab.active {
+  border-right: solid #03edf975 2px;
+  color: #fdfdfd;
+  text-shadow: 0 0 2px #001716, 0 0 3px #03edf975, 0 0 5px #03edf975, 0 0 8px #03edf975;
+}
+
+.side-bar span.tab-separator {
+  font-size: 12px;
+  justify-content: center;
+  display: flex;
+  background: #212124;
+  color: grey;
+}
+
+.left-container {
+  display: flex;
   flex: 2;
+  height: 100%;
+}
+
+.editor-container {
+  display: flex;
+  flex: 1;
   height: 100%;
   position: relative;
 }

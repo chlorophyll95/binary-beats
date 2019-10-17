@@ -9,7 +9,7 @@ import ReactMarkdown from 'react-markdown';
 import Tokenizer from './dsl/libs/Tokenizer';
 import { BBProgram } from './dsl/ast/BBProgram';
 import { loadSyntaxJs } from './prism-binary-beats';
-import { plainJane } from './presets';
+import { plainJane, nightmare, drake } from './presets';
 
 import './App.css';
 import './syntax.css';
@@ -33,9 +33,13 @@ interface State {
   logs: string[];
   tempo: number;
   activeTab: number;
+  activeSideTab: number;
   docs: string;
   canSave: boolean;
+  presets: any;
 }
+
+type TabType = 'top' | 'side';
 
 const ERROR_STR = "ERROR: ";
 
@@ -51,8 +55,14 @@ class App extends Component<any, State> {
       isPlaying: false,
       tempo: 85,
       activeTab: 0,
+      activeSideTab: 0,
       docs: null,
       canSave: null,
+      presets: {
+        1: plainJane,
+        2: nightmare,
+        3: drake,
+      },
     };
 
     this.pushLog = this.pushLog.bind(this);
@@ -66,6 +76,7 @@ class App extends Component<any, State> {
     this.onSave = this.onSave.bind(this);
     this.onCodeChange = this.onCodeChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.getCurrentCode = this.getCurrentCode.bind(this);
   }
 
   componentDidMount() {
@@ -159,12 +170,18 @@ class App extends Component<any, State> {
     }, 1000);
   }
 
+  getCurrentCode() {
+    const { presets, activeSideTab, code } = this.state;
+
+    return activeSideTab > 0 ? presets[activeSideTab] : code;
+  }
+
   onCompile() {
     this.reset();
     this.pushLog('Tokenizing code...');
     try {
       console.log("starting");
-      Tokenizer.makeTokenizer(this.state.code);
+      Tokenizer.makeTokenizer(this.getCurrentCode());
       this.pushLog('Tokenizing complete ✅');
 
       let program = new BBProgram();
@@ -197,22 +214,34 @@ class App extends Component<any, State> {
     this.clearLog();
   }
 
-  onTabSwitch(clickedTab: number) {
+  onTabSwitch(clickedTab: number, tabType: TabType) {
     this.setState((prevState) => ({
       ...prevState,
-      activeTab: clickedTab,
+      [tabType === 'top' ? 'activeTab' : 'activeSideTab']: clickedTab,
     }));
   }
 
   onCodeChange(code: string) {
-    this.setState({
-      code,
-      canSave: true,
-    });
+    const { activeSideTab, presets } = this.state;
+
+    if (activeSideTab > 0) {
+      this.setState((prevState) => ({
+        ...prevState,
+        presets: {
+          ...presets,
+          [activeSideTab]: code,
+        }
+      }));
+    } else {
+      this.setState({
+        code,
+        canSave: true,
+      });
+    }
   }
 
   render() {
-    const { activeTab, docs, canSave } = this.state;
+    const { activeTab, docs, canSave, activeSideTab } = this.state;
 
     return (
       <div className="container">
@@ -225,47 +254,76 @@ class App extends Component<any, State> {
           <div className="tabs">
             <span
               className={`tab ${activeTab === 0 ? 'active' : ''}`}
-              onClick={() => this.onTabSwitch(0)}
+              onClick={() => this.onTabSwitch(0, 'top')}
             >
               <span className="emoji">💻</span>Output
             </span>
             <span
               className={`tab ${activeTab === 1 ? 'active' : ''}`}
-              onClick={() => this.onTabSwitch(1)}
+              onClick={() => this.onTabSwitch(1, 'top')}
             >
               <span className="emoji">📄</span>Docs
             </span>
           </div>
         </div>
-        <div className="editor-container">
-          <Editor
-            value={this.state.code}
-            onValueChange={code => this.onCodeChange(code)}
-            highlight={code => prism.highlight(code, prism.languages.binaryBeats, 'javascript')}
-            padding={10}
-            style={{
-              fontFamily: '"Fira Mono", "Fira Mono", monospace'
-            }}
-            className="container__editor"
-          />
-          <div className="buttons-bar">
-            {
-              canSave !== null && (
-                <Button
-                  disabled={!canSave}
-                  type="save"
-                  onClick={this.onSave}
-                  text={canSave === false ? 'Saved!' : 'Save'}
-                  style={{ marginRight: '12px' }}
-                />
-              )
-            }
-            <Button
-              type="play"
-              disabled={this.state.code.trim().length == 0}
-              onClick={this.state.isPlaying ? this.onStop : this.onCompile}
-              text={this.state.isPlaying ? 'Stop' : 'Play'}
+        <div className="left-container">
+          <div className="side-bar">
+            <span
+              className={`side-tab ${activeSideTab === 0 ? 'active' : ''}`}
+              onClick={() => this.onTabSwitch(0, 'side')}
+            >
+              Work <br /> Space
+            </span>
+            <span className="tab-separator">PRESETS</span>
+            <span
+              className={`side-tab ${activeSideTab === 1 ? 'active' : ''}`}
+              onClick={() => this.onTabSwitch(1, 'side')}
+            >
+              A
+            </span>
+            <span
+              className={`side-tab ${activeSideTab === 2 ? 'active' : ''}`}
+              onClick={() => this.onTabSwitch(2, 'side')}
+            >
+              B
+            </span>
+            <span
+              className={`side-tab ${activeSideTab === 3 ? 'active' : ''}`}
+              onClick={() => this.onTabSwitch(3, 'side')}
+            >
+              C
+            </span>
+          </div>
+          <div className="editor-container">
+            <Editor
+              value={this.getCurrentCode()}
+              onValueChange={code => this.onCodeChange(code)}
+              highlight={code => prism.highlight(code, prism.languages.binaryBeats, 'javascript')}
+              padding={10}
+              style={{
+                fontFamily: '"Fira Mono", "Fira Mono", monospace'
+              }}
+              className="container__editor"
             />
+            <div className="buttons-bar">
+              {
+                canSave !== null && activeSideTab === 0 && (
+                  <Button
+                    disabled={!canSave}
+                    type="save"
+                    onClick={this.onSave}
+                    text={canSave === false ? 'Saved!' : 'Save'}
+                    style={{ marginRight: '12px' }}
+                  />
+                )
+              }
+              <Button
+                type="play"
+                disabled={this.state.code.trim().length == 0}
+                onClick={this.state.isPlaying ? this.onStop : this.onCompile}
+                text={this.state.isPlaying ? 'Stop' : 'Play'}
+              />
+            </div>
           </div>
         </div>
         {
