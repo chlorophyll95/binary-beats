@@ -2,14 +2,17 @@ export const drake =
 `Set tempo to 100 bpm 
 Rhythms:
   Define REST as |----|
+  Define HATS as |xxxx|
 Create beat INTRO with layers: 
   SNR: {x-x-xx-x-xxxxxx-}
 Create beat VERSE with layers: 
   SNR: (|-x-x|)*7
   OHT: (REST {---------------x})*3
+  HAT: (HATS)*7
+  PED: (HATS)*7
   KCK: (|x-x-| {x-------x------x})*3 |x-x-|
-  HAT: ({xxxxxxxxxxxxxxxx})*7
-Play INTRO VERSE`;
+  MHC: ({xxxxxxxxxxxxxxx-})*7
+Play VERSE INTRO`;
 
 export const nightmare = 
 `Set tempo to 129 bpm

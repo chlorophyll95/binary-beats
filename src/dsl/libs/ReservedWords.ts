@@ -22,5 +22,11 @@ export const reservedWords = [
     'CSH',
     'RDE',
     'OHT',
+    'PED',
+    'RBL',
+    'TMB',
+    'CAB',
+    'MAR',
+    'MHC',
     'CLP'
 ]
