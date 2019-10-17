@@ -51,3 +51,14 @@ Create beat VERSE with layers:
   KCK: BASICKICK {x-----xx--x---x-} {x-----xx--x--x-x} BASICKICK
   OHT: ({------x---------})*4 
 Play VERSE`;
+
+export const getLow =
+`Set tempo to 101 bpm 
+Create beat INTRO with layers: 
+  KCK: ([x--x--x-])*3 [x--x----]
+  CLP: ([--x---x-])*3 [--x-----]
+Create beat VERSE with layers:
+  KCK: ([x--x--x-])*3 [x--x----]
+  CLP: ([--x---x-])*3 [--x-----]
+  HAT: ({xxxxxxxxxxxxxxxx})*4
+Play INTRO VERSE`;

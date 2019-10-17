@@ -18,6 +18,28 @@ Beats are the atomic components of Binary Beats. A **beat** is simply an `x`, wh
  - : Missed beat (rest)
 ```
 
+### Percussion Elements
+The percussion elements that we currently support are:
+
+|Drum Type             | Drum code |
+|:---------------------|:----------|
+| Hi-hat               | HAT |
+| Snare                | SNR |
+| Kick                 | KCK |
+| Tom 1                | TM1 |
+| Tom 2                | TM2 |
+| Tom 3                | TM3 |
+| Open Hi-hat          | OHT |
+| Pedal Hi-hat         | PED |
+| Crash                | CSH |
+| Ride                 | RDE |
+| Ride bell            | RBL |
+| Tambourine           | TMB |
+| Cabasa               | CAB |
+| Maraca               | MAR |
+| Mute High Conga &nbsp; | MHC |
+| Clap                 | CLP |
+
 
 ## Creating Bars
 
@@ -74,29 +96,6 @@ Having a rhythms block is **not necessary**, but is necessary if you want to sav
 
 ## Let's Create a Beat Sequence!
 So far, we have gained extensive knowledge about rhythms and bars. We can combine these to create beat sequences! This is where we map the percussion elements, or **layers**, to the rhythms we want them to play!
-
-### Percussion Elements
-The percussion elements that we currently support are:
-
-| Percussion element   | Element code |
-| --------- | ------- |
-| Hi-hat    | HAT |
-| Snare | SNR |
-| Bass      | BAS |
-| Kick      | KCK |
-| Tom 1      | TM1 |
-| Tom 2      | TM2 |
-| Tom 3      | TM3 |
-| Open Hi-hat      | OHT |
-| Pedal Hi-hat      | PED |
-| Crash      | CSH |
-| Ride      | RDE |
-| Ride bell      | RBL |
-| Tambourine      | TMB |
-| Cabasa      | CAB |
-| Maraca      | MAR |
-| Mute High Conga      | MHC |
-| Clap | CLP |
 
 ### Creating Beat Sequences
 A beat sequence can be created like so:
