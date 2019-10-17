@@ -166,13 +166,18 @@ span .emoji {
   flex: 1;
 }
 
-.docs {
+.docs-container {
   flex: 1;
   height: 100%;
   border-left: solid 1px #dadce0;
   background: #bbbbbb;
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
+}
+
+.docs {
+  padding: 0 12px;
 }
 
 .output {

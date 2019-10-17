@@ -30,6 +30,7 @@ interface State {
   logs: string[];
   tempo: number;
   activeTab: number;
+  docs: string;
 }
 
 const ERROR_STR = "ERROR: ";
@@ -46,6 +47,7 @@ class App extends Component<any, State> {
       isPlaying: false,
       tempo: 85,
       activeTab: 0,
+      docs: null,
     };
 
     this.pushLog = this.pushLog.bind(this);
@@ -56,6 +58,23 @@ class App extends Component<any, State> {
     this.reset = this.reset.bind(this);
     this.clearSymbolTable = this.clearSymbolTable.bind(this);
     this.onTabSwitch = this.onTabSwitch.bind(this);
+  }
+
+  componentDidMount() {
+    const readmePath = require('./docs.md');
+
+    fetch(readmePath)
+      .then(response => {
+        return response.text()
+      })
+      .then(text => {
+        this.setState({
+          docs: text,
+        })
+      })
+      .catch((error) => {
+        console.log('error fetching docs: ', error);
+      })
   }
 
   pushLog(log: string) {
@@ -140,7 +159,7 @@ class App extends Component<any, State> {
   }
 
   render() {
-    const { activeTab } = this.state;
+    const { activeTab, docs } = this.state;
 
     return (
       <div className="container">
@@ -204,8 +223,11 @@ class App extends Component<any, State> {
         }
         {
           activeTab === 1 && (
-            <div className="docs">
-              <ReactMarkdown source={'# This is a header\n\nAnd this is a paragraph'} />
+            <div className="docs-container">
+              <ReactMarkdown
+                source={docs}
+                className="docs"
+              />
             </div>
           )
         }
