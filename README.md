@@ -4,6 +4,8 @@ project doc: https://docs.google.com/document/d/1pXFMwa_RV8snXHQbCD4V427rB7FA4Ny
 
 demo link: https://binary-beats.firebaseapp.com/
 
+video link: https://youtu.be/Ay0XkIB5fyI
+
 ## Usage Instructions
 
 To start web app:
