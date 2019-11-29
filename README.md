@@ -1,12 +1,10 @@
-# binary-beats
+# Welcome to binary-beats
 
 A React app that lets you *code* **bangers**.
 
 **demo link**: https://binary-beats.firebaseapp.com/ 👀👀👀
 
 **video link**: https://youtu.be/Ay0XkIB5fyI
-
-*project doc*: https://docs.google.com/document/d/1pXFMwa_RV8snXHQbCD4V427rB7FA4Ny0S2IkgWzWXtM/edit#heading=h.tq1b2yrt6f1m
 
 ## Usage Instructions
 
