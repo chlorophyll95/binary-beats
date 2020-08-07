@@ -9,7 +9,7 @@
     "@types/react": "16.9.5",
     "@types/react-dom": "16.9.1",
     "midi-sounds-react": "^1.2.54",
-    "prismjs": "^1.17.1",
+    "prismjs": "^1.21.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-icons": "^3.7.0",
